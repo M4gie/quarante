@@ -21,9 +21,25 @@ export default class RoomPool {
   constructor({ defaultRooms, server }: Props) {
     this.server = server;
     for (let i = 0; i < defaultRooms.length; i++) {
-      this.rooms.push(new Room({ name: defaultRooms[i], nameSpace: server.of(defaultRooms[i]) }));
+      this.addRoom(defaultRooms[i]);
     }
   }
+
+  /* Add room */
+  addRoom = (roomTheme: string) => {
+    const roomNumber = this.rooms.reduce(function (acc, curr) {
+      if (curr.name === roomTheme) {
+        acc++;
+      }
+      return acc;
+    }, 0);
+    const room = new Room({
+      name: roomTheme,
+      nameSpace: this.server.of(roomTheme),
+      roomNumber,
+    });
+    this.rooms.push(room);
+  };
 
   /* Get all online rooms name */
   getNames = () => {
