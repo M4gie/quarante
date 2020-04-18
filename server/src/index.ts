@@ -11,8 +11,7 @@ server.on('connection', function (socket) {
   /* Easy way to count client, .clients doesn't send the "real" value */
   clients++;
   server.emit('connected', clients);
-  server.emit('rooms', Rooms.getNames());
-
+  server.emit('rooms', Rooms.getRooms());
   socket.on('disconnect', function () {
     clients--;
     server.emit('connected', clients);

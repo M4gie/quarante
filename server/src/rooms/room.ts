@@ -7,20 +7,13 @@ import { Namespace } from 'socket.io';
 type Props = {
   name: string;
   nameSpace: Namespace;
-  roomNumber: number;
+  roomNumber: string;
 };
 
 export default class Room {
-  /* Name of the room and also the socket.io room name */
   name: string;
-
-  /* Socket.io room namespace */
-  nameSpace: Namespace;
-
-  /* Unique room id */
-  id: number;
-
-  /* Number of connected clients in the room */
+  nameSpace: Namespace; // Socket.io room namespace
+  id: string;
   clients: number = 0;
 
   constructor({ name, nameSpace, roomNumber }: Props) {
@@ -28,4 +21,14 @@ export default class Room {
     this.nameSpace = nameSpace;
     this.id = roomNumber;
   }
+
+  gameLoop = (): void => {
+    this.nameSpace.on('connection', function (socket) {
+      console.log('Welcome to the game !');
+
+      socket.on('disconnect', function () {
+        console.log('Left the game !');
+      });
+    });
+  };
 }

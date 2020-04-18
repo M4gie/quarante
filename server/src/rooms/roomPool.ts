@@ -12,10 +12,7 @@ type Props = {
 };
 
 export default class RoomPool {
-  /* All rooms */
   rooms: Room[] = [];
-
-  /* Socket.io server */
   server: Server;
 
   constructor({ defaultRooms, server }: Props) {
@@ -25,24 +22,17 @@ export default class RoomPool {
     }
   }
 
-  /* Add room */
   addRoom = (roomTheme: string) => {
-    /* Count all rooms with the same new roomThme name to get a unique ID for the room */
-    const roomNumber = this.rooms.reduce(function (acc, curr) {
-      if (curr.name === roomTheme) {
-        acc++;
-      }
-      return acc;
-    }, 0);
+    const roomNumber = this.rooms.length.toString(); // Get a unique ID for the room
     const room = new Room({
       name: roomTheme,
-      nameSpace: this.server.of(roomTheme),
+      nameSpace: this.server.of(roomNumber),
       roomNumber,
     });
+    room.gameLoop();
     this.rooms.push(room);
   };
 
-  /* Get all online rooms */
   getRooms = () => {
     const roomNames = this.rooms.map(({ name, id }) => {
       return { name, id };
