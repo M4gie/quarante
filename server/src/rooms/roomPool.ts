@@ -27,6 +27,7 @@ export default class RoomPool {
 
   /* Add room */
   addRoom = (roomTheme: string) => {
+    /* Count all rooms with the same new roomThme name to get a unique ID for the room */
     const roomNumber = this.rooms.reduce(function (acc, curr) {
       if (curr.name === roomTheme) {
         acc++;
@@ -41,9 +42,11 @@ export default class RoomPool {
     this.rooms.push(room);
   };
 
-  /* Get all online rooms name */
-  getNames = () => {
-    const roomNames = this.rooms.map((room) => room.nameSpace.name);
+  /* Get all online rooms */
+  getRooms = () => {
+    const roomNames = this.rooms.map(({ name, id }) => {
+      return { name, id };
+    });
     return roomNames;
   };
 }
