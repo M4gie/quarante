@@ -1,18 +1,20 @@
 import io from 'socket.io';
 
-const server = io.listen(3000);
+import RoomPool from './rooms/roomPool';
 
+const server = io.listen(3000);
+const defaultRooms = ['Mangas/Animes', 'Cinéma'];
+const Rooms = new RoomPool({ defaultRooms, server });
 let clients = 0;
 
 server.on('connection', function (socket) {
   /* Easy way to count client, .clients doesn't send the "real" value */
   clients++;
-  console.log('User connected !');
   server.emit('connected', clients);
+  server.emit('rooms', Rooms.getNames());
 
   socket.on('disconnect', function () {
     clients--;
-    console.log('User disconnected !');
     server.emit('connected', clients);
   });
 });

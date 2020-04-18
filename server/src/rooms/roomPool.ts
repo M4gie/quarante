@@ -21,7 +21,13 @@ export default class RoomPool {
   constructor({ defaultRooms, server }: Props) {
     this.server = server;
     for (let i = 0; i < defaultRooms.length; i++) {
-      this.rooms.push(new Room({ nameSpace: server.of(defaultRooms[i]) }));
+      this.rooms.push(new Room({ name: defaultRooms[i], nameSpace: server.of(defaultRooms[i]) }));
     }
   }
+
+  /* Get all online rooms name */
+  getNames = () => {
+    const roomNames = this.rooms.map((room) => room.nameSpace.name);
+    return roomNames;
+  };
 }
