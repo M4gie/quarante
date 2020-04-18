@@ -7,6 +7,7 @@ import { Namespace } from 'socket.io';
 type Props = {
   name: string;
   nameSpace: Namespace;
+  roomNumber: number;
 };
 
 export default class Room {
@@ -16,11 +17,15 @@ export default class Room {
   /* Socket.io room namespace */
   nameSpace: Namespace;
 
+  /* Unique room id */
+  roomNumber: number;
+
   /* Number of connected clients in the room */
   clients: number = 0;
 
-  constructor({ name, nameSpace }: Props) {
+  constructor({ name, nameSpace, roomNumber }: Props) {
     this.name = name;
     this.nameSpace = nameSpace;
+    this.roomNumber = roomNumber;
   }
 }
