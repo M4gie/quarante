@@ -18,7 +18,7 @@ export default class Room {
   nameSpace: Namespace;
 
   /* Unique room id */
-  roomNumber: number;
+  id: number;
 
   /* Number of connected clients in the room */
   clients: number = 0;
@@ -26,6 +26,6 @@ export default class Room {
   constructor({ name, nameSpace, roomNumber }: Props) {
     this.name = name;
     this.nameSpace = nameSpace;
-    this.roomNumber = roomNumber;
+    this.id = roomNumber;
   }
 }
