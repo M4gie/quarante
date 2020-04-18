@@ -2,18 +2,20 @@
  * Room object
  */
 
+import { Namespace } from 'socket.io';
+
 type Props = {
-  roomName: string;
+  nameSpace: Namespace;
 };
 
 export default class Room {
-  /* Name of the room and also the socket.io room name */
-  roomName: string;
+  /* Socket.io room namespace */
+  nameSpace: Namespace;
 
   /* Number of connected clients in the room */
-  connected: number = 0;
+  clients: number = 0;
 
-  constructor({ roomName }: Props) {
-    this.roomName = roomName;
+  constructor({ nameSpace }: Props) {
+    this.nameSpace = nameSpace;
   }
 }
