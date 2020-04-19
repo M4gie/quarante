@@ -2,6 +2,9 @@
  * Classic game object
  */
 
+import { Socket } from 'socket.io';
+
+import Player from '../player';
 import Room, { RoomProps } from '../rooms/room';
 
 export enum GameType {
@@ -18,7 +21,6 @@ type Props = {
 };
 
 export default class Classic extends Room {
-  players = [];
   maxPlayers: number;
 
   constructor({ theme, nameSpace, roomNumber, ...gameSetup }: Props & RoomProps) {
@@ -27,11 +29,13 @@ export default class Classic extends Room {
   }
 
   gameLoop = (): void => {
-    this.nameSpace.on('connection', function (socket) {
+    this.nameSpace.on('connection', (socket: Socket) => {
       console.log('Welcome to the game !');
+      this.addPlayer(socket);
 
-      socket.on('disconnect', function () {
+      socket.on('disconnect', () => {
         console.log('Left the game !');
+        this.removePlayer(socket);
       });
     });
   };
