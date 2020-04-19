@@ -4,31 +4,23 @@
 
 import { Namespace } from 'socket.io';
 
-type Props = {
-  name: string;
+import { GameTheme } from '../games/classic';
+
+export type RoomProps = {
+  theme: GameTheme;
   nameSpace: Namespace;
   roomNumber: string;
 };
 
 export default class Room {
-  name: string;
+  theme: GameTheme;
   nameSpace: Namespace; // Socket.io room namespace
   id: string;
   clients: number = 0;
 
-  constructor({ name, nameSpace, roomNumber }: Props) {
-    this.name = name;
+  constructor({ theme, nameSpace, roomNumber }: RoomProps) {
+    this.theme = theme;
     this.nameSpace = nameSpace;
     this.id = roomNumber;
   }
-
-  gameLoop = (): void => {
-    this.nameSpace.on('connection', function (socket) {
-      console.log('Welcome to the game !');
-
-      socket.on('disconnect', function () {
-        console.log('Left the game !');
-      });
-    });
-  };
 }

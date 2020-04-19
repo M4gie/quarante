@@ -4,15 +4,20 @@
 
 import { Server } from 'socket.io';
 
-import Room from './room';
+import Classic, { GameType, GameTheme } from '../games/classic';
+
+export type RoomConfig = {
+  game: GameType;
+  theme: GameTheme;
+};
 
 type Props = {
-  defaultRooms: string[];
+  defaultRooms: RoomConfig[];
   server: Server;
 };
 
 export default class RoomPool {
-  rooms: Room[] = [];
+  rooms: Classic[] = [];
   server: Server;
 
   constructor({ defaultRooms, server }: Props) {
@@ -22,20 +27,22 @@ export default class RoomPool {
     }
   }
 
-  addRoom = (roomTheme: string) => {
+  addRoom = (roomConfig: RoomConfig) => {
     const roomNumber = this.rooms.length.toString(); // Get a unique ID for the room
-    const room = new Room({
-      name: roomTheme,
+    const roomData = {
+      theme: roomConfig.theme,
       nameSpace: this.server.of(roomNumber),
       roomNumber,
-    });
+      maxPlayers: 10,
+    };
+    const room = new Classic(roomData);
     room.gameLoop();
     this.rooms.push(room);
   };
 
   getRooms = () => {
-    const roomNames = this.rooms.map(({ name, id }) => {
-      return { name, id };
+    const roomNames = this.rooms.map(({ theme, id }) => {
+      return { theme, id };
     });
     return roomNames;
   };

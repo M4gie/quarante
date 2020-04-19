@@ -1,10 +1,17 @@
 import io from 'socket.io';
 
+import { GameType, GameTheme } from './games/classic';
 import RoomPool from './rooms/roomPool';
 
 const server = io.listen(3000);
-const defaultRooms = ['Mangas/Animes', 'Cinéma'];
+
+const defaultRooms = [
+  { game: GameType.Classic, theme: GameTheme.MangaAnime },
+  { game: GameType.Classic, theme: GameTheme.Movie },
+];
+
 const Rooms = new RoomPool({ defaultRooms, server });
+
 let clients = 0;
 
 server.on('connection', function (socket) {
