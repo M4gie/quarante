@@ -13,11 +13,19 @@ export type RoomProps = {
   roomNumber: string;
 };
 
+export enum Status {
+  Waiting,
+  Starting,
+  InProgress,
+  Ended,
+}
+
 export default class Room {
   theme: GameTheme;
   nameSpace: Namespace; // Socket.io room namespace
   id: string;
   players: Player[] = [];
+  status: Status = Status.Waiting;
 
   constructor({ theme, nameSpace, roomNumber }: RoomProps) {
     this.theme = theme;
