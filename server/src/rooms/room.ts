@@ -21,11 +21,11 @@ export enum Status {
 }
 
 export default class Room {
-  theme: GameTheme;
-  nameSpace: Namespace; // Socket.io room namespace
   id: string;
+  nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
   status: Status = Status.Waiting;
+  theme: GameTheme;
 
   constructor({ theme, nameSpace, roomNumber }: RoomProps) {
     this.theme = theme;
@@ -33,7 +33,36 @@ export default class Room {
     this.id = roomNumber;
   }
 
-  startGame(socket: Socket) {}
+  addPlayer = (socket: Socket) => {
+    this.players.push(new Player({ name: socket.id, id: socket.id }));
+    this.emitScoreBoard();
+  };
+
+  emit = (event: string, data: any) => {
+    this.nameSpace.emit(event, data);
+  };
+
+  emitScoreBoard = () => {
+    this.emit('players', this.getPlayers());
+  };
+
+  emitStatus = () => {
+    this.emit('status', { status: this.status });
+  };
+
+  emitStatusToSocket = (id: string) => {
+    this.emitToSocket('status', { status: this.status }, id);
+  };
+
+  emitToSocket = (event: string, data: any, id: string) => {
+    this.nameSpace.to(id).emit(event, data);
+  };
+
+  getPlayers = (): { name: string; score: number }[] => {
+    return this.players.map(({ name, score }) => {
+      return { name, score };
+    });
+  };
 
   roomLoop = (): void => {
     this.nameSpace.on('connection', (socket: Socket) => {
@@ -45,39 +74,10 @@ export default class Room {
     });
   };
 
-  addPlayer = (socket: Socket) => {
-    this.players.push(new Player({ name: socket.id, id: socket.id }));
-    this.emitScoreBoard();
-  };
-
   removePlayer = (socket: Socket) => {
     this.players = this.players.filter(({ id }) => id !== socket.id);
     this.emitScoreBoard();
   };
 
-  emitScoreBoard = () => {
-    this.emit('players', this.getPlayers());
-  };
-
-  getPlayers = (): { name: string; score: number }[] => {
-    return this.players.map(({ name, score }) => {
-      return { name, score };
-    });
-  };
-
-  emitStatus = () => {
-    this.emit('status', { status: this.status });
-  };
-
-  emitStatusToSocket = (id: string) => {
-    this.emitToSocket('status', { status: this.status }, id);
-  };
-
-  emit = (event: string, data: any) => {
-    this.nameSpace.emit(event, data);
-  };
-
-  emitToSocket = (event: string, data: any, id: string) => {
-    this.nameSpace.to(id).emit(event, data);
-  };
+  startGame(socket: Socket) {}
 }

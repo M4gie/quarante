@@ -8,12 +8,12 @@ type Props = {
 };
 
 export default class Player {
-  name: string;
   id: string;
+  name: string;
   score: number = 0;
 
   constructor(props: Props) {
-    this.name = props.name;
     this.id = props.id;
+    this.name = props.name;
   }
 }
