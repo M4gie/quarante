@@ -34,6 +34,12 @@ export default class Classic extends Room {
     this.emitToSocket('question', { question: this.currentQuestion }, id);
   }
 
+  getTopPlayer = (): Player => {
+    return this.players.reduce(function (prev, current) {
+      return prev.score > current.score ? prev : current;
+    });
+  };
+
   startGame = (socket: Socket) => {
     if (this.status === Status.Waiting && this.players.length >= 1) {
       this.setStatus(Status.Starting, socket.id);
