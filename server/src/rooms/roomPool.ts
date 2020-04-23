@@ -36,7 +36,7 @@ export default class RoomPool {
       maxPlayers: 10,
     };
     const room = new Classic(roomData);
-    room.gameLoop();
+    room.roomLoop();
     this.rooms.push(room);
   };
 

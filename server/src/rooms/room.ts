@@ -33,6 +33,18 @@ export default class Room {
     this.id = roomNumber;
   }
 
+  startGame(socket: Socket) {}
+
+  roomLoop = (): void => {
+    this.nameSpace.on('connection', (socket: Socket) => {
+      this.addPlayer(socket);
+      this.startGame(socket);
+      socket.on('disconnect', () => {
+        this.removePlayer(socket);
+      });
+    });
+  };
+
   addPlayer = (socket: Socket) => {
     this.players.push(new Player({ name: socket.id, id: socket.id }));
     this.emitScoreBoard();
@@ -44,12 +56,28 @@ export default class Room {
   };
 
   emitScoreBoard = () => {
-    this.nameSpace.emit('players', this.getPlayers());
+    this.emit('players', this.getPlayers());
   };
 
   getPlayers = (): { name: string; score: number }[] => {
     return this.players.map(({ name, score }) => {
       return { name, score };
     });
+  };
+
+  emitStatus = () => {
+    this.emit('status', { status: this.status });
+  };
+
+  emitStatusToSocket = (id: string) => {
+    this.emitToSocket('status', { status: this.status }, id);
+  };
+
+  emit = (event: string, data: any) => {
+    this.nameSpace.emit(event, data);
+  };
+
+  emitToSocket = (event: string, data: any, id: string) => {
+    this.nameSpace.to(id).emit(event, data);
   };
 }

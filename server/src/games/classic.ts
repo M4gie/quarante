@@ -4,8 +4,7 @@
 
 import { Socket } from 'socket.io';
 
-import Player from '../player';
-import Room, { RoomProps } from '../rooms/room';
+import Room, { RoomProps, Status } from '../rooms/room';
 
 export enum GameType {
   Classic,
@@ -22,21 +21,32 @@ type Props = {
 
 export default class Classic extends Room {
   maxPlayers: number;
+  time: NodeJS.Timer | null = null;
 
   constructor({ theme, nameSpace, roomNumber, ...gameSetup }: Props & RoomProps) {
     super({ theme, nameSpace, roomNumber });
     this.maxPlayers = gameSetup.maxPlayers;
   }
 
-  gameLoop = (): void => {
-    this.nameSpace.on('connection', (socket: Socket) => {
-      console.log('Welcome to the game !');
-      this.addPlayer(socket);
-
-      socket.on('disconnect', () => {
-        console.log('Left the game !');
-        this.removePlayer(socket);
+  startGame = (socket: Socket) => {
+    if (this.status === Status.Waiting && this.players.length >= 1) {
+      this.status = Status.Starting;
+      this.emitStatus();
+      setTimeout(() => {
+        this.status = Status.InProgress;
+        this.emitStatus();
       });
-    });
+    }
+    switch (this.status) {
+      case Status.Waiting:
+        this.emitStatusToSocket(socket.id);
+        break;
+      case Status.Starting:
+        this.emitStatusToSocket(socket.id);
+        break;
+      case Status.Ended:
+        this.emitStatusToSocket(socket.id);
+        break;
+    }
   };
 }
