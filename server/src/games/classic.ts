@@ -33,6 +33,9 @@ export default class Classic extends Room {
   gameLoop(id: string) {
     setInterval(() => {
       this.emitToSocket('question', { question: this.currentQuestion }, id);
+      setTimeout(() => {
+        this.emitToSocket('answer', { answer: 'Malcolm' }, id);
+      }, 3 * 1000);
     }, 5 * 1000);
   }
 
