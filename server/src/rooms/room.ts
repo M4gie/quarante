@@ -79,9 +79,9 @@ export default class Room {
     this.emitScoreBoard();
   };
 
-  setStatus = (status: Status) => {
+  setStatus = (status: Status, id: string) => {
     this.status = status;
-    this.emit('status', { status: this.status });
+    this.emitToSocket('status', { status: this.status }, id);
   };
 
   startGame(socket: Socket) {}

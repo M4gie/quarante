@@ -30,9 +30,9 @@ export default class Classic extends Room {
 
   startGame = (socket: Socket) => {
     if (this.status === Status.Waiting && this.players.length >= 1) {
-      this.setStatus(Status.Starting);
+      this.setStatus(Status.Starting, socket.id);
       setTimeout(() => {
-        this.setStatus(Status.InProgress);
+        this.setStatus(Status.InProgress, socket.id);
       }, 5 * 1000);
     }
     switch (this.status) {
