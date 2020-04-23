@@ -33,7 +33,7 @@ export default class Classic extends Room {
       this.setStatus(Status.Starting);
       setTimeout(() => {
         this.setStatus(Status.InProgress);
-      });
+      }, 5 * 1000);
     }
     switch (this.status) {
       case Status.Waiting:
