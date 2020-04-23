@@ -81,7 +81,7 @@ export default class Room {
 
   setStatus = (status: Status) => {
     this.status = status;
-    this.emit('status', this.status);
+    this.emit('status', { status: this.status });
   };
 
   startGame(socket: Socket) {}
