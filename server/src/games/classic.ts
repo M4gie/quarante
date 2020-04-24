@@ -47,7 +47,7 @@ export default class Classic extends Room {
     ];
   };
 
-  gameLoop = (id: string) => {
+  gameLoop = () => {
     setInterval(() => {
       /** Emit Question */
       setTimeout(() => {
@@ -64,12 +64,13 @@ export default class Classic extends Room {
 
   initGame = () => {
     this.fetchQuestions();
+    this.event.on('start', () => this.gameLoop());
   };
 
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
     if (this.status === Status.Waiting && this.players.length >= 2) {
-      /** Emit Event */
+      this.event.emit('start');
     }
   };
 }

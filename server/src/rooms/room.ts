@@ -3,6 +3,7 @@
  */
 
 import { Namespace, Socket } from 'socket.io';
+import { EventEmitter } from 'events';
 
 import { GameTheme } from '../games/classic';
 import Player from '../player';
@@ -21,6 +22,7 @@ export enum Status {
 }
 
 export default class Room {
+  event: EventEmitter = new EventEmitter();
   id: string;
   nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
