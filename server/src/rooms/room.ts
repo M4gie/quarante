@@ -64,10 +64,13 @@ export default class Room {
     });
   };
 
+  initGame = () => {};
+
   roomLoop = (): void => {
     this.nameSpace.on('connection', (socket: Socket) => {
       this.addPlayer(socket);
       this.startGame(socket);
+      this.initGame();
       socket.on('disconnect', () => {
         this.removePlayer(socket);
       });

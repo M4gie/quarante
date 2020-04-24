@@ -47,14 +47,14 @@ export default class Classic extends Room {
     ];
   };
 
-  gameLoop(id: string) {
+  gameLoop = (id: string) => {
     setInterval(() => {
-      this.emitToSocket('question', { question: this.currentRound }, id);
+      /** Emit Question */
       setTimeout(() => {
-        this.emitToSocket('answer', { answer: 'Malcolm' }, id);
+        /** Emit Answer */
       }, 3 * 1000);
-    }, 5 * 1000);
-  }
+    }, 10 * 1000);
+  };
 
   getTopPlayer = (): Player => {
     return this.players.reduce(function (prev, current) {
@@ -62,21 +62,14 @@ export default class Classic extends Room {
     });
   };
 
+  initGame = () => {
+    this.fetchQuestions();
+  };
+
   startGame = (socket: Socket) => {
-    if (this.status === Status.Waiting && this.players.length >= 1) {
-      this.setStatus(Status.InProgress, socket.id);
-      this.gameLoop(socket.id);
-    }
-    switch (this.status) {
-      case Status.Waiting:
-        this.emitStatusToSocket(socket.id);
-        break;
-      case Status.Starting:
-        this.emitStatusToSocket(socket.id);
-        break;
-      case Status.Ended:
-        this.emitStatusToSocket(socket.id);
-        break;
+    this.emitStatusToSocket(socket.id);
+    if (this.status === Status.Waiting && this.players.length >= 2) {
+      /** Emit Event */
     }
   };
 }
