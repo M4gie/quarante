@@ -36,7 +36,9 @@ export default class Classic extends Room {
     this.maxPlayers = gameSetup.maxPlayers;
   }
 
-  emitAnswer = () => {};
+  emitAnswer = () => {
+    this.emit('answer', this.currentRound?.answer);
+  };
 
   emitQuestion = () => {
     if (this.rounds.length <= 0) {
@@ -60,9 +62,9 @@ export default class Classic extends Room {
     setInterval(() => {
       this.emitQuestion();
       setTimeout(() => {
-        /** Emit Answer */
-      }, 3 * 1000);
-    }, 10 * 1000);
+        this.emitAnswer();
+      }, 15 * 1000);
+    }, 20 * 1000);
   };
 
   getTopPlayer = (): Player => {
