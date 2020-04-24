@@ -4,8 +4,8 @@
 
 import { Socket } from 'socket.io';
 
-import Room, { RoomProps, Status } from '../rooms/room';
 import Player from '../player';
+import Room, { RoomProps, Status } from '../rooms/room';
 
 export enum GameType {
   Classic,
@@ -16,6 +16,11 @@ export enum GameTheme {
   Movie,
 }
 
+type Round = {
+  question: string;
+  answer: string;
+};
+
 type Props = {
   maxPlayers: number;
 };
@@ -23,12 +28,24 @@ type Props = {
 export default class Classic extends Room {
   maxPlayers: number;
   currentQuestion: string = 'Poupi poupi poupipou';
+  rounds: Round[] = [];
   time: NodeJS.Timer | null = null;
 
   constructor({ theme, nameSpace, roomNumber, ...gameSetup }: Props & RoomProps) {
     super({ theme, nameSpace, roomNumber });
     this.maxPlayers = gameSetup.maxPlayers;
   }
+
+  emitAnswer = () => {};
+
+  emitQuestion = () => {};
+
+  fetchQuestions = () => {
+    this.rounds = [
+      { question: 'Poupi poupi poupipou', answer: 'Malcolm' },
+      { question: 'Now, say my name.', answer: 'Breaking Bad' },
+    ];
+  };
 
   gameLoop(id: string) {
     setInterval(() => {
