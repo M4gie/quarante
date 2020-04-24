@@ -27,7 +27,7 @@ type Props = {
 
 export default class Classic extends Room {
   maxPlayers: number;
-  currentQuestion: string = 'Poupi poupi poupipou';
+  currentRound: Round | null = null;
   rounds: Round[] = [];
   time: NodeJS.Timer | null = null;
 
@@ -49,7 +49,7 @@ export default class Classic extends Room {
 
   gameLoop(id: string) {
     setInterval(() => {
-      this.emitToSocket('question', { question: this.currentQuestion }, id);
+      this.emitToSocket('question', { question: this.currentRound }, id);
       setTimeout(() => {
         this.emitToSocket('answer', { answer: 'Malcolm' }, id);
       }, 3 * 1000);
