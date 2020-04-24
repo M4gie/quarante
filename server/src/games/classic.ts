@@ -26,6 +26,7 @@ type Props = {
 };
 
 export default class Classic extends Room {
+  isGuessTime: boolean = false;
   maxPlayers: number;
   currentRound: Round | null = null;
   rounds: Round[] = [];
@@ -64,8 +65,10 @@ export default class Classic extends Room {
         this.emit('winner', this.getTopPlayer().name);
         clearInterval(interval);
       } else {
+        this.isGuessTime = true;
         this.emitQuestion();
         setTimeout(() => {
+          this.isGuessTime = false;
           this.emitAnswer();
         }, 15 * 1000);
       }
@@ -85,7 +88,7 @@ export default class Classic extends Room {
 
   playerGuess = (id: string, guess: string) => {
     if (!guess) return;
-    if (guess === this.currentRound?.answer) {
+    if (guess === this.currentRound?.answer && this.isGuessTime === true) {
       this.addPlayerPoint(id, 1);
     }
   };
