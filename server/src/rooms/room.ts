@@ -40,6 +40,15 @@ export default class Room {
     this.emitScoreBoard();
   };
 
+  addPlayerPoint = (id: string, point: number) => {
+    const player = this.getPlayer(id);
+    if (player) {
+      player.score += point;
+      this.updatePlayer(player, id);
+      this.emitScoreBoard();
+    }
+  };
+
   emit = (event: string, data: any) => {
     this.nameSpace.emit(event, data);
   };
@@ -60,6 +69,9 @@ export default class Room {
     this.nameSpace.to(id).emit(event, data);
   };
 
+  getPlayer = (id: string): Player | undefined => {
+    return this.players.find((player) => player.id === id);
+  };
   getPlayers = (): { name: string; score: number }[] => {
     return this.players.map(({ name, score }) => {
       return { name, score };
@@ -90,4 +102,11 @@ export default class Room {
   };
 
   startGame(socket: Socket) {}
+
+  updatePlayer = (player: Player, id: string) => {
+    const index = this.players.findIndex((player) => player.id === id);
+    if (index !== -1) {
+      this.players[index] = player;
+    }
+  };
 }

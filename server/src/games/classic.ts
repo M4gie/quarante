@@ -59,11 +59,16 @@ export default class Classic extends Room {
   };
 
   gameLoop = () => {
-    setInterval(() => {
-      this.emitQuestion();
-      setTimeout(() => {
-        this.emitAnswer();
-      }, 15 * 1000);
+    const interval = setInterval(() => {
+      if (this.getTopPlayer().score >= 40) {
+        this.emit('winner', this.getTopPlayer().name);
+        clearInterval(interval);
+      } else {
+        this.emitQuestion();
+        setTimeout(() => {
+          this.emitAnswer();
+        }, 15 * 1000);
+      }
     }, 20 * 1000);
   };
 
@@ -78,10 +83,18 @@ export default class Classic extends Room {
     this.event.on('start', () => this.gameLoop());
   };
 
+  playerGuess = (id: string, guess: string) => {
+    if (!guess) return;
+    if (guess === this.currentRound?.answer) {
+      this.addPlayerPoint(id, 1);
+    }
+  };
+
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
     if (this.status === Status.Waiting && this.players.length >= 2) {
       this.event.emit('start');
     }
+    socket.on('guess', (guess) => this.playerGuess(socket.id, guess));
   };
 }
