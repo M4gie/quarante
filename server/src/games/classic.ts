@@ -38,9 +38,18 @@ export default class Classic extends Room {
 
   emitAnswer = () => {};
 
-  emitQuestion = () => {};
+  emitQuestion = () => {
+    if (this.rounds.length <= 0) {
+      this.fetchRounds();
+    }
+    const newRound = this.rounds.shift();
+    if (newRound) {
+      this.currentRound = newRound;
+      this.emit('question', this.currentRound.question);
+    }
+  };
 
-  fetchQuestions = () => {
+  fetchRounds = () => {
     this.rounds = [
       { question: 'Poupi poupi poupipou', answer: 'Malcolm' },
       { question: 'Now, say my name.', answer: 'Breaking Bad' },
@@ -49,7 +58,7 @@ export default class Classic extends Room {
 
   gameLoop = () => {
     setInterval(() => {
-      /** Emit Question */
+      this.emitQuestion();
       setTimeout(() => {
         /** Emit Answer */
       }, 3 * 1000);
@@ -63,7 +72,7 @@ export default class Classic extends Room {
   };
 
   initGame = () => {
-    this.fetchQuestions();
+    this.fetchRounds();
     this.event.on('start', () => this.gameLoop());
   };
 
