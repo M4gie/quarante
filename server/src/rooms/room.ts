@@ -2,8 +2,8 @@
  * Room object
  */
 
-import { Namespace, Socket } from 'socket.io';
 import { EventEmitter } from 'events';
+import { Namespace, Socket } from 'socket.io';
 
 import { GameTheme } from '../games/classic';
 import Player from '../player';
@@ -19,6 +19,13 @@ export enum Status {
   Starting,
   InProgress,
   Ended,
+}
+
+enum RoomEvent {
+  Connection = 'connection',
+  Disconnect = 'disconnect',
+  Players = 'players',
+  Status = 'status',
 }
 
 export default class Room {
@@ -54,15 +61,15 @@ export default class Room {
   };
 
   emitScoreBoard = () => {
-    this.emit('players', this.getPlayers());
+    this.emit(RoomEvent.Players, this.getPlayers());
   };
 
   emitStatus = () => {
-    this.emit('status', { status: this.status });
+    this.emit(RoomEvent.Status, { status: this.status });
   };
 
   emitStatusToSocket = (id: string) => {
-    this.emitToSocket('status', { status: this.status }, id);
+    this.emitToSocket(RoomEvent.Status, { status: this.status }, id);
   };
 
   emitToSocket = (event: string, data: any, id: string) => {
@@ -81,11 +88,11 @@ export default class Room {
   initGame = () => {};
 
   roomLoop = (): void => {
-    this.nameSpace.on('connection', (socket: Socket) => {
+    this.nameSpace.on(RoomEvent.Connection, (socket: Socket) => {
       this.addPlayer(socket);
       this.startGame(socket);
       this.initGame();
-      socket.on('disconnect', () => {
+      socket.on(RoomEvent.Disconnect, () => {
         this.removePlayer(socket);
       });
     });
@@ -98,7 +105,7 @@ export default class Room {
 
   setStatus = (status: Status, id: string) => {
     this.status = status;
-    this.emitToSocket('status', { status: this.status }, id);
+    this.emitToSocket(RoomEvent.Status, { status: this.status }, id);
   };
 
   startGame(socket: Socket) {}
