@@ -18,8 +18,10 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.resource('themes', 'ThemesController').only(['index', 'store', 'update', 'destroy']);
+
+Route.resource('roundTypes', 'RoundTypesController').only(['index', 'store', 'update', 'destroy']);
+
+Route.resource('rounds', 'RoundsController').only(['index', 'store', 'update', 'destroy']);
