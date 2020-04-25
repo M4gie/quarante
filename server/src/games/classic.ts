@@ -16,6 +16,14 @@ export enum GameTheme {
   Movie,
 }
 
+enum GameEvent {
+  Answer = 'answer',
+  Guess = 'guess',
+  Question = 'question',
+  Start = 'start',
+  Winner = 'winner',
+}
+
 type Round = {
   question: string;
   answer: string;
@@ -38,7 +46,7 @@ export default class Classic extends Room {
   }
 
   emitAnswer = () => {
-    this.emit('answer', this.currentRound?.answer);
+    this.emit(GameEvent.Answer, this.currentRound?.answer);
   };
 
   emitQuestion = () => {
@@ -48,7 +56,7 @@ export default class Classic extends Room {
     const newRound = this.rounds.shift();
     if (newRound) {
       this.currentRound = newRound;
-      this.emit('question', this.currentRound.question);
+      this.emit(GameEvent.Question, this.currentRound.question);
     }
   };
 
@@ -63,7 +71,7 @@ export default class Classic extends Room {
     const interval = setInterval(() => {
       const topPlayer = this.getTopPlayer();
       if (topPlayer && topPlayer.score >= 40) {
-        this.emit('winner', topPlayer.name);
+        this.emit(GameEvent.Winner, topPlayer.name);
         clearInterval(interval);
       } else {
         this.isGuessTime = true;
@@ -87,7 +95,7 @@ export default class Classic extends Room {
 
   initGame = () => {
     this.fetchRounds();
-    this.event.on('start', () => this.gameLoop());
+    this.event.on(GameEvent.Start, () => this.gameLoop());
   };
 
   playerGuess = (id: string, guess: string) => {
@@ -100,8 +108,8 @@ export default class Classic extends Room {
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
     if (this.status === Status.Waiting && this.players.length >= 2) {
-      this.event.emit('start');
+      this.event.emit(GameEvent.Start);
     }
-    socket.on('guess', (guess) => this.playerGuess(socket.id, guess));
+    socket.on(GameEvent.Guess, (guess) => this.playerGuess(socket.id, guess));
   };
 }
