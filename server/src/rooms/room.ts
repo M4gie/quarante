@@ -61,6 +61,7 @@ export default class Room {
   };
 
   emitScoreBoard = () => {
+    this.sortPlayers();
     this.emit(RoomEvent.Players, this.getPlayers());
   };
 
@@ -79,6 +80,7 @@ export default class Room {
   getPlayer = (id: string): Player | undefined => {
     return this.players.find((player) => player.id === id);
   };
+
   getPlayers = (): { name: string; score: number }[] => {
     return this.players.map(({ name, score }) => {
       return { name, score };
@@ -106,6 +108,10 @@ export default class Room {
   setStatus = (status: Status, id: string) => {
     this.status = status;
     this.emitToSocket(RoomEvent.Status, { status: this.status }, id);
+  };
+
+  sortPlayers = () => {
+    this.players.sort((a, b) => a.score - b.score);
   };
 
   startGame(socket: Socket) {}
