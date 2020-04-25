@@ -61,8 +61,9 @@ export default class Classic extends Room {
 
   gameLoop = () => {
     const interval = setInterval(() => {
-      if (this.getTopPlayer().score >= 40) {
-        this.emit('winner', this.getTopPlayer().name);
+      const topPlayer = this.getTopPlayer();
+      if (topPlayer && topPlayer.score >= 40) {
+        this.emit('winner', topPlayer.name);
         clearInterval(interval);
       } else {
         this.isGuessTime = true;
@@ -75,10 +76,13 @@ export default class Classic extends Room {
     }, 20 * 1000);
   };
 
-  getTopPlayer = (): Player => {
-    return this.players.reduce(function (prev, current) {
-      return prev.score > current.score ? prev : current;
-    });
+  getTopPlayer = (): Player | null => {
+    if (this.players.length > 0) {
+      return this.players.reduce(function (prev, current) {
+        return prev.score > current.score ? prev : current;
+      });
+    }
+    return null;
   };
 
   initGame = () => {
