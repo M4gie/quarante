@@ -25,3 +25,5 @@ Route.resource('themes', 'ThemesController').only(['index', 'store', 'update', '
 Route.resource('roundTypes', 'RoundTypesController').only(['index', 'store', 'update', 'destroy']);
 
 Route.resource('rounds', 'RoundsController').only(['index', 'store', 'update', 'destroy']);
+
+Route.post('rounds/random', 'RoundsController.random');

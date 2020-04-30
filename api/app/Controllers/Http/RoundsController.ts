@@ -15,16 +15,38 @@ export default class RoundsController {
   public async update(ctx: HttpContextContract) {
     const { id } = ctx.params;
     const data = await ctx.request.validate(RoundValidator);
-    const roundType = await Round.findOrFail(id);
-    roundType.merge(data);
-    roundType.save();
-    return roundType;
+    const round = await Round.findOrFail(id);
+    round.merge(data);
+    round.save();
+    return round;
   }
 
   public async destroy(ctx: HttpContextContract) {
     const { id } = ctx.params;
-    const roundType = await Round.findOrFail(id);
-    roundType.delete();
-    return roundType;
+    const round = await Round.findOrFail(id);
+    round.delete();
+    return round;
+  }
+
+  public async random({ request }: HttpContextContract) {
+    // TODO Check if params are arrays of numbers
+    const params = request.only(['themes', 'roundTypes']);
+    const themes: number[] = JSON.parse(params.themes);
+    const roundTypes: number[] = JSON.parse(params.roundTypes);
+
+    console.log(themes, roundTypes);
+
+    if (!themes || !roundTypes) return [];
+    const rounds = await Round.query()
+      .whereIn('theme_id', themes)
+      .whereIn('round_type_id', roundTypes)
+      .select('*');
+    const selectRounds: Round[] = [];
+    for (let i = 0; i < 100 && rounds.length > 0; i++) {
+      const rand = Math.floor(Math.random() * rounds.length);
+      selectRounds.push(rounds[rand]);
+      rounds.splice(rand, 1);
+    }
+    return selectRounds;
   }
 }
