@@ -7,7 +7,7 @@
     "start": "node ace serve --watch"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^2.0.0",
+    "@adonisjs/assembler": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "adonis-preset-ts": "^1.0.4",
@@ -20,10 +20,10 @@
     "youch-terminal": "^1.0.0"
   },
   "dependencies": {
-    "@adonisjs/ace": "^6.0.0",
-    "@adonisjs/core": "^5.0.0-preview-rc",
-    "@adonisjs/fold": "^6.0.0",
-    "@adonisjs/lucid": "^8.0.2",
+    "@adonisjs/ace": "^6.9.2",
+    "@adonisjs/core": "^5.0.0-preview-rc-1.5",
+    "@adonisjs/fold": "^6.3.5",
+    "@adonisjs/lucid": "^8.1",
     "pg": "^8.0.3",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
