@@ -3,7 +3,7 @@ import io from 'socket.io';
 import { GameType, GameTheme } from './games/classic';
 import RoomPool from './rooms/roomPool';
 
-const server = io.listen(3000);
+const server = io.listen(4040);
 
 const defaultRooms = [
   { game: GameType.Classic, theme: GameTheme.MangaAnime },
