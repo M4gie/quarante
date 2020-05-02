@@ -2,6 +2,7 @@
  * Classic game object
  */
 
+import axios from 'axios';
 import { Socket } from 'socket.io';
 
 import Player from '../player';
@@ -9,11 +10,6 @@ import Room, { RoomProps, Status } from '../rooms/room';
 
 export enum GameType {
   Classic,
-}
-
-export enum GameTheme {
-  MangaAnime,
-  Movie,
 }
 
 enum GameEvent {
@@ -61,6 +57,7 @@ export default class Classic extends Room {
   };
 
   fetchRounds = () => {
+    console.log('THEME: ', this.theme);
     this.rounds = [
       { question: 'Poupi poupi poupipou', answer: 'Malcolm' },
       { question: 'Now, say my name.', answer: 'Breaking Bad' },

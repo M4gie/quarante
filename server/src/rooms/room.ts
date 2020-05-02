@@ -5,11 +5,11 @@
 import { EventEmitter } from 'events';
 import { Namespace, Socket } from 'socket.io';
 
-import { GameTheme } from '../games/classic';
 import Player from '../player';
+import { Theme } from '../typings/data';
 
 export type RoomProps = {
-  theme: GameTheme;
+  theme: Theme;
   nameSpace: Namespace;
   roomNumber: string;
 };
@@ -34,7 +34,7 @@ export default class Room {
   nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
   status: Status = Status.Waiting;
-  theme: GameTheme;
+  theme: Theme;
 
   constructor({ theme, nameSpace, roomNumber }: RoomProps) {
     this.theme = theme;
@@ -93,7 +93,6 @@ export default class Room {
     this.nameSpace.on(RoomEvent.Connection, (socket: Socket) => {
       this.addPlayer(socket);
       this.startGame(socket);
-      this.initGame();
       socket.on(RoomEvent.Disconnect, () => {
         this.removePlayer(socket);
       });

@@ -1,26 +1,33 @@
-import io from 'socket.io';
+import io, { Socket, Server } from 'socket.io';
 
-import { GameType, GameTheme } from './games/classic';
+import { getThemes } from './requests';
 import RoomPool from './rooms/roomPool';
+import { Theme } from './typings/data';
 
-const server = io.listen(4040);
+const ioServer = io.listen(4040);
 
-const defaultRooms = [
-  { game: GameType.Classic, theme: GameTheme.MangaAnime },
-  { game: GameType.Classic, theme: GameTheme.Movie },
-];
+async function server(ioServer: Server) {
+  let themes: Theme[] = [];
+  try {
+    themes = await getThemes();
+  } catch (e) {
+    console.log('API request error (getThemes): ', e);
+  }
 
-const Rooms = new RoomPool({ defaultRooms, server });
+  const Rooms = new RoomPool({ themes, server: ioServer });
 
-let clients = 0;
+  let clients = 0;
 
-server.on('connection', function (socket) {
-  /* Easy way to count client, .clients doesn't send the "real" value */
-  clients++;
-  server.emit('connected', clients);
-  server.emit('rooms', Rooms.getRooms());
-  socket.on('disconnect', function () {
-    clients--;
-    server.emit('connected', clients);
+  ioServer.on('connection', function (socket: Socket) {
+    /* Easy way to count client, .clients doesn't send the "real" value */
+    clients++;
+    ioServer.emit('connected', clients);
+    ioServer.emit('rooms', Rooms.getRooms());
+    socket.on('disconnect', function () {
+      clients--;
+      ioServer.emit('connected', clients);
+    });
   });
-});
+}
+
+server(ioServer);
