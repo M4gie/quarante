@@ -18,6 +18,7 @@ enum GameEvent {
   Guess = 'guess',
   Question = 'question',
   Start = 'start',
+  Stop = 'stop',
   Winner = 'winner',
 }
 
@@ -26,10 +27,12 @@ type Props = {
 };
 
 export default class Classic extends Room {
+  answerTimer: NodeJS.Timeout | null = null;
   isGuessTime: boolean = false;
   maxPlayers: number;
   currentRound: Round | null = null;
   rounds: Round[] = [];
+  roundTimer: NodeJS.Timeout | null = null;
   time: NodeJS.Timer | null = null;
 
   constructor({ theme, nameSpace, roomNumber, ...gameSetup }: Props & RoomProps) {
@@ -57,20 +60,31 @@ export default class Classic extends Room {
   };
 
   gameLoop = () => {
-    const interval = setInterval(() => {
+    this.roundTimer = setInterval(() => {
       const topPlayer = this.getTopPlayer();
       if (topPlayer && topPlayer.score >= 40) {
         this.emit(GameEvent.Winner, topPlayer.name);
-        clearInterval(interval);
+        if (this.roundTimer) {
+          clearInterval(this.roundTimer);
+        }
       } else {
         this.isGuessTime = true;
         this.emitQuestion();
-        setTimeout(() => {
+        this.answerTimer = setTimeout(() => {
           this.isGuessTime = false;
           this.emitAnswer();
         }, 15 * 1000);
       }
     }, 20 * 1000);
+  };
+
+  gameStop = () => {
+    if (this.roundTimer) {
+      clearInterval(this.roundTimer);
+    }
+    if (this.answerTimer) {
+      clearInterval(this.answerTimer);
+    }
   };
 
   getTopPlayer = (): Player | null => {

@@ -77,6 +77,8 @@ export default class Room {
     this.nameSpace.to(id).emit(event, data);
   };
 
+  gameStop = () => {};
+
   getPlayer = (id: string): Player | undefined => {
     return this.players.find((player) => player.id === id);
   };
@@ -95,6 +97,9 @@ export default class Room {
       this.startGame(socket);
       socket.on(RoomEvent.Disconnect, () => {
         this.removePlayer(socket);
+        if (this.players.length <= 0) {
+          this.gameStop();
+        }
       });
     });
   };
