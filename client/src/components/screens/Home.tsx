@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'react-native';
+import io from 'socket.io-client';
 import styled from 'styled-components/native';
 
 export default function Home() {
+  const [rooms, setRooms] = useState([]);
+  let socket = null;
+
+  useEffect(function mount() {
+    socket = io('ws://localhost:4040/');
+    socket.on('rooms', (data: any) => {
+      setRooms(data);
+    });
+  }, []);
+
   return (
     <Container>
-      <Text>Hello Quarante</Text>
+      <Text>Rooms:</Text>
+      {rooms.map((room) => (
+        <Text key={room.id}>{room.theme}</Text>
+      ))}
     </Container>
   );
 }
