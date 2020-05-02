@@ -30,17 +30,10 @@ export default class RoundsController {
 
   public async random({ request }: HttpContextContract) {
     // TODO Check if params are arrays of numbers
-    const params = request.only(['themes', 'roundTypes']);
-    const themes: number[] = JSON.parse(params.themes);
-    const roundTypes: number[] = JSON.parse(params.roundTypes);
+    const { themes = [] }: { themes: number[] } = request.only(['themes']);
 
-    console.log(themes, roundTypes);
-
-    if (!themes || !roundTypes) return [];
-    const rounds = await Round.query()
-      .whereIn('theme_id', themes)
-      .whereIn('round_type_id', roundTypes)
-      .select('*');
+    if (!themes) return [];
+    const rounds = await Round.query().whereIn('theme_id', themes).select('*');
     const selectRounds: Round[] = [];
     for (let i = 0; i < 100 && rounds.length > 0; i++) {
       const rand = Math.floor(Math.random() * rounds.length);
