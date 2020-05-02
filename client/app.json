@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "front",
+    "name": "client",
+    "slug": "client",
     "platforms": [
       "ios",
       "android",
