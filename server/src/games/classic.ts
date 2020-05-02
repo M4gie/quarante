@@ -2,11 +2,12 @@
  * Classic game object
  */
 
-import axios from 'axios';
 import { Socket } from 'socket.io';
 
 import Player from '../player';
+import { getRandomRounds } from '../requests';
 import Room, { RoomProps, Status } from '../rooms/room';
+import { Round } from '../typings/data';
 
 export enum GameType {
   Classic,
@@ -19,11 +20,6 @@ enum GameEvent {
   Start = 'start',
   Winner = 'winner',
 }
-
-type Round = {
-  question: string;
-  answer: string;
-};
 
 type Props = {
   maxPlayers: number;
@@ -45,23 +41,19 @@ export default class Classic extends Room {
     this.emit(GameEvent.Answer, this.currentRound?.answer);
   };
 
-  emitQuestion = () => {
+  emitQuestion = async () => {
     if (this.rounds.length <= 0) {
-      this.fetchRounds();
+      await this.fetchRounds();
     }
     const newRound = this.rounds.shift();
     if (newRound) {
       this.currentRound = newRound;
-      this.emit(GameEvent.Question, this.currentRound.question);
+      this.emit(GameEvent.Question, this.currentRound.data);
     }
   };
 
-  fetchRounds = () => {
-    console.log('THEME: ', this.theme);
-    this.rounds = [
-      { question: 'Poupi poupi poupipou', answer: 'Malcolm' },
-      { question: 'Now, say my name.', answer: 'Breaking Bad' },
-    ];
+  fetchRounds = async () => {
+    this.rounds = await getRandomRounds([this.theme.id]);
   };
 
   gameLoop = () => {
@@ -104,7 +96,7 @@ export default class Classic extends Room {
 
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
-    if (this.status === Status.Waiting && this.players.length >= 2) {
+    if (this.status === Status.Waiting && this.players.length >= 1) {
       this.event.emit(GameEvent.Start);
     }
     socket.on(GameEvent.Guess, (guess) => this.playerGuess(socket.id, guess));
