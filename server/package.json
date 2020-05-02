@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/socket.io": "^2.1.4",
+    "axios": "^0.19.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
