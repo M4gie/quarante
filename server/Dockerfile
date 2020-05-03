@@ -9,5 +9,5 @@ RUN yarn build
 FROM node:12.16.3-alpine
 WORKDIR /app
 COPY --from=builder /app .
-EXPOSE 4040
+EXPOSE 4240
 CMD ["yarn", "start"]

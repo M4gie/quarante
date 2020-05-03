@@ -40,6 +40,22 @@ export default class Classic extends Room {
     this.maxPlayers = gameSetup.maxPlayers;
   }
 
+  setPlayerCanGuess = (id: string, canGuess: boolean): void => {
+    const player: Player | undefined = this.getPlayer(id);
+    if (player) {
+      player.canGuess = canGuess;
+      this.updatePlayer(player, id);
+    }
+  };
+
+  setPlayersCanGuess = (canGuess: boolean): void => {
+    this.players.forEach((player) => {
+      if (player.canGuess === !canGuess) {
+        this.setPlayerCanGuess(player.id, canGuess);
+      }
+    });
+  };
+
   emitAnswer = () => {
     this.emit(GameEvent.Answer, this.currentRound?.answer);
   };
@@ -72,6 +88,7 @@ export default class Classic extends Room {
         this.emitQuestion();
         this.answerTimer = setTimeout(() => {
           this.isGuessTime = false;
+          this.setPlayersCanGuess(true);
           this.emitAnswer();
         }, 15 * 1000);
       }
@@ -102,8 +119,14 @@ export default class Classic extends Room {
   };
 
   playerGuess = (id: string, guess: string) => {
-    if (!guess) return;
-    if (guess === this.currentRound?.answer && this.isGuessTime === true) {
+    const player = this.getPlayer(id);
+    if (!guess || !player) return;
+    if (
+      player.canGuess === true &&
+      guess === this.currentRound?.answer &&
+      this.isGuessTime === true
+    ) {
+      this.setPlayerCanGuess(id, false);
       this.addPlayerPoint(id, 1);
     }
   };
