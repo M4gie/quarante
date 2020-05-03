@@ -8,7 +8,7 @@ export default function Home() {
   let socket = null;
 
   useEffect(function mount() {
-    socket = io('ws://localhost:4040/');
+    socket = io('ws://localhost:4240/');
     socket.on('rooms', (data: any) => {
       setRooms(data);
     });
