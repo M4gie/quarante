@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
-import io from 'socket.io-client';
+import { Text, TextInput, Button } from 'react-native';
 import styled from 'styled-components/native';
 
-export default function Room() {
+export default function Room({ socket }) {
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
   const [players, setPlayers] = useState([]);
+  const [playerAnswer, setPlayerAnswer] = useState('');
 
   useEffect(function mount() {
-    const socket = io('ws://localhost:4240/1');
     socket.on('answer', (data: any) => {
       setAnswer(data);
     });
@@ -22,14 +21,23 @@ export default function Room() {
     });
   }, []);
 
+  function emitAnswer() {
+    socket.emit('guess', playerAnswer);
+  }
+
   return (
     <Container>
-      <Text>Answer: {answer}</Text>
+      <Text>Réponse: {answer}</Text>
       <Text>Question: {question}</Text>
-      <Text>Players: </Text>
+      <Text>Joueurs: </Text>
       {players.map((player) => (
-        <Text key={player.name}>{player.name}</Text>
+        <Text key={player.name}>
+          {player.name} {player.score}
+        </Text>
       ))}
+      <Text>Donner une réponse: </Text>
+      <TextInput onChangeText={(text) => setPlayerAnswer(text)} />
+      <Button title="Envoyer" onPress={emitAnswer} />
     </Container>
   );
 }
