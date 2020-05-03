@@ -6,7 +6,7 @@ import { Socket } from 'socket.io';
 
 import Player from '../player';
 import { getRandomRounds } from '../requests';
-import Room, { RoomProps, Status } from '../rooms/room';
+import Room, { RoomProps, RoomStatus } from '../rooms/room';
 import { Round } from '../typings/data';
 
 export enum GameType {
@@ -110,7 +110,8 @@ export default class Classic extends Room {
 
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
-    if (this.status === Status.Waiting && this.players.length >= 1) {
+    if (this.status === RoomStatus.Waiting && this.players.length >= 1) {
+      this.setStatus(RoomStatus.Starting);
       this.event.emit(GameEvent.Start);
     }
     socket.on(GameEvent.Guess, (guess) => this.playerGuess(socket.id, guess));

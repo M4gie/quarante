@@ -14,7 +14,7 @@ export type RoomProps = {
   roomNumber: string;
 };
 
-export enum Status {
+export enum RoomStatus {
   Waiting,
   Starting,
   InProgress,
@@ -33,7 +33,7 @@ export default class Room {
   id: string;
   nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
-  status: Status = Status.Waiting;
+  status: RoomStatus = RoomStatus.Waiting;
   theme: Theme;
 
   constructor({ theme, nameSpace, roomNumber }: RoomProps) {
@@ -93,6 +93,7 @@ export default class Room {
 
   roomLoop = (): void => {
     this.nameSpace.on(RoomEvent.Connection, (socket: Socket) => {
+      console.log('Welcome to our new player !');
       this.addPlayer(socket);
       this.startGame(socket);
       socket.on(RoomEvent.Disconnect, () => {
@@ -109,9 +110,9 @@ export default class Room {
     this.emitScoreBoard();
   };
 
-  setStatus = (status: Status, id: string) => {
+  setStatus = (status: RoomStatus) => {
     this.status = status;
-    this.emitToSocket(RoomEvent.Status, { status: this.status }, id);
+    this.emit(RoomEvent.Status, { status: this.status });
   };
 
   sortPlayers = () => {

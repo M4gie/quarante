@@ -4,7 +4,7 @@ import { getThemes } from './requests';
 import RoomPool from './rooms/roomPool';
 import { Theme } from './typings/data';
 
-const ioServer = io.listen(4040);
+const ioServer = io.listen(4240);
 
 async function server(ioServer: Server) {
   let themes: Theme[] = [];
