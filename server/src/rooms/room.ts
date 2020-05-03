@@ -116,7 +116,7 @@ export default class Room {
   };
 
   sortPlayers = () => {
-    this.players.sort((a, b) => a.score - b.score);
+    this.players.sort((a, b) => b.score - a.score);
   };
 
   startGame(socket: Socket) {}
