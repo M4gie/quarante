@@ -1,10 +1,12 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import io from 'socket.io-client';
 
-import Home from './src/components/screens/Home';
-import Room from './src/components/screens/Room';
+import HomeStack from './src/navigation/HomeStack';
 
 export default function App() {
-  const socket = io('ws://localhost:4240/1');
-  return <Room socket={socket} />;
+  return (
+    <NavigationContainer>
+      <HomeStack />
+    </NavigationContainer>
+  );
 }

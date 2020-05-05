@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Text, TextInput, Button } from 'react-native';
+import io from 'socket.io-client';
 import styled from 'styled-components/native';
 
-export default function Room({ socket }) {
+import { HomeNavigatorProps } from '../../typings/navigation';
+
+export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
   const [players, setPlayers] = useState([]);
   const [playerAnswer, setPlayerAnswer] = useState('');
 
   useEffect(function mount() {
+    console.log('Connect to : ws://localhost:4240/' + route.params.id);
+    const socket = io('ws://localhost:4240/' + route.params.id);
     socket.on('answer', (data: any) => {
       setAnswer(data);
     });
@@ -22,7 +27,7 @@ export default function Room({ socket }) {
   }, []);
 
   function emitAnswer() {
-    socket.emit('guess', playerAnswer);
+    /* socket.emit('guess', playerAnswer); */
   }
 
   return (

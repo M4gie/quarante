@@ -3,7 +3,13 @@ import { Text } from 'react-native';
 import io from 'socket.io-client';
 import styled from 'styled-components/native';
 
-export default function Home() {
+import { HomeNavigationProp } from '../../typings/navigation';
+
+type Props = {
+  navigation: HomeNavigationProp<'Home'>;
+};
+
+export default function Home({ navigation }: Props) {
   const [rooms, setRooms] = useState([]);
   let socket = null;
 
@@ -18,7 +24,9 @@ export default function Home() {
     <Container>
       <Text>Rooms:</Text>
       {rooms.map((room) => (
-        <Text key={room.id}>{room.theme}</Text>
+        <Text onPress={() => navigation.navigate('Room', { id: room.id })} key={room.id}>
+          {room.theme}
+        </Text>
       ))}
     </Container>
   );
