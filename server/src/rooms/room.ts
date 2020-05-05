@@ -93,13 +93,13 @@ export default class Room {
 
   roomLoop = (): void => {
     this.nameSpace.on(RoomEvent.Connection, (socket: Socket) => {
-      console.log('Welcome to our new player !');
       this.addPlayer(socket);
       this.startGame(socket);
       socket.on(RoomEvent.Disconnect, () => {
         this.removePlayer(socket);
         if (this.players.length <= 0) {
           this.gameStop();
+          this.status = RoomStatus.Waiting;
         }
       });
     });
