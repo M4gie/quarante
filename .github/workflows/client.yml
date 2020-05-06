@@ -1,0 +1,34 @@
+name: "[CLIENT] lint, compile TS"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "client/**"
+      - ".github/workflows/client.yml"
+  pull_request:
+    types: ["opened", "edited", "synchronize"]
+    branches:
+      - master
+    paths:
+      - "client/**"
+      - ".github/workflows/client.yml"
+
+jobs:
+  lint-build:
+    name: lint and compile TS
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn lint
+      - run: yarn ts
+      # Maybe soon
+      # - uses: jsmrcaga/action-netlify-deploy@master
+      #     with:
+      #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
