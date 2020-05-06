@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node ace build",
     "start": "node ace serve --watch",
-    "ts": "tsc --noEmit",
+    "ts": "tsc --incremental false --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0"
   },
   "devDependencies": {
