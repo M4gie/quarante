@@ -6,7 +6,7 @@
     "build": "node ace build",
     "start": "node ace serve --watch",
     "ts": "tsc --noEmit",
-    "lint": "eslint --ext '.js,.ts,.tsx' ."
+    "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.3",

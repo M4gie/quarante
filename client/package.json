@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "ts": "tsc --noEmit",
-    "lint": "eslint --ext '.js,.ts,.tsx' .",
+    "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0",
     "build": "expo build:web"
   },
   "dependencies": {
