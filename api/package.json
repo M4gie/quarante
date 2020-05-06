@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "build": "node ace build",
-    "start": "node ace serve --watch"
+    "start": "node ace serve --watch",
+    "ts": "tsc --noEmit",
+    "lint": "eslint --ext '.js,.ts,.tsx' ."
   },
   "devDependencies": {
     "@adonisjs/assembler": "^2.0.3",
