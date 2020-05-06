@@ -2,15 +2,11 @@ name: "[SERVER] lint, compile TS"
 
 on:
   push:
-    branches:
-      - master
     paths:
       - "server/**"
       - ".github/workflows/server.yml"
   pull_request:
     types: ["opened", "edited", "synchronize"]
-    branches:
-      - master
     paths:
       - "server/**"
       - ".github/workflows/server.yml"
@@ -27,8 +23,3 @@ jobs:
       - run: yarn install
       - run: yarn lint
       - run: yarn ts
-      # Maybe soon
-      # - uses: jsmrcaga/action-netlify-deploy@master
-      #     with:
-      #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
