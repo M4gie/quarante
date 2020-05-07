@@ -14,8 +14,9 @@ import axios from 'axios';
  */
 
 const client = axios.create({
-  baseURL: 'http://localhost:3333/',
+  baseURL: process.env.API_URL,
 });
+console.log('Connecting to this API: ', process.env.API_URL);
 
 const request = async function (options: any) {
   const onSuccess = function (response: any) {

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import io, { Socket, Server } from 'socket.io';
 
 import { getThemes } from './requests';
