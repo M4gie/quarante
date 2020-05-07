@@ -3,7 +3,8 @@ import { Text } from 'react-native';
 import io from 'socket.io-client';
 import styled from 'styled-components/native';
 
-import { HomeNavigationProp } from '../../typings/navigation';
+import { SERVER_URL } from '../constant';
+import { HomeNavigationProp } from '../typings/navigation';
 
 type Props = {
   navigation: HomeNavigationProp<'Home'>;
@@ -14,7 +15,8 @@ export default function Home({ navigation }: Props) {
   let socket = null;
 
   useEffect(function mount() {
-    socket = io('ws://localhost:4240/');
+    console.log('Connect to :', SERVER_URL);
+    socket = io(SERVER_URL);
     socket.on('rooms', (data: any) => {
       setRooms(data);
     });

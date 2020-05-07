@@ -3,7 +3,8 @@ import { Text, TextInput, Button } from 'react-native';
 import io from 'socket.io-client';
 import styled from 'styled-components/native';
 
-import { HomeNavigatorProps } from '../../typings/navigation';
+import { SERVER_URL } from '../constant';
+import { HomeNavigatorProps } from '../typings/navigation';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
   const [answer, setAnswer] = useState('');
@@ -12,8 +13,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   const [playerAnswer, setPlayerAnswer] = useState('');
 
   useEffect(function mount() {
-    console.log('Connect to : ws://localhost:4240/' + route.params.id);
-    const socket = io('ws://localhost:4240/' + route.params.id);
+    const socket = io(SERVER_URL + route.params.id);
     socket.on('answer', (data: any) => {
       setAnswer(data);
     });
