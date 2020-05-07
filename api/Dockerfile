@@ -1,5 +1,5 @@
 FROM node:12.16.3 as builder
-RUN apk add --no-cache git
+RUN apt install git
 WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
