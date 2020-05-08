@@ -33,7 +33,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   return (
     <Container>
       <Text>Réponse: {answer}</Text>
-      <Text>Question: {question}</Text>
+      <Text>Citation: {question}</Text>
       <Text>Joueurs: </Text>
       {players.map((player) => (
         <Text key={player.name}>

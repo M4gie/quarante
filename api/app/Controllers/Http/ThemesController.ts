@@ -4,7 +4,7 @@ import ThemeValidator from 'App/Validators/ThemeValidator';
 
 export default class ThemesController {
   public async index() {
-    return Theme.all();
+    return Theme.query().orderBy('id', 'asc');
   }
 
   public async store({ request }: HttpContextContract) {
