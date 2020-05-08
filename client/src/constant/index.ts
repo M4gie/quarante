@@ -1,5 +1,3 @@
-import Constants from 'expo-constants';
-
 type EnvVars = {
   serverUrl: string;
 };
@@ -19,9 +17,6 @@ const ENV: Env = {
 };
 
 export default function getEnv(): EnvVars {
-  const env = Constants.manifest.releaseChannel;
-  if (env === null || env === undefined || env === '') return ENV.dev;
-  if (env.indexOf('dev') !== -1) return ENV.dev;
-  if (env.indexOf('prod') !== -1) return ENV.prod;
-  return ENV.dev;
+  if (__DEV__) return ENV.dev;
+  else return ENV.prod;
 }
