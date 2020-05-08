@@ -7,7 +7,7 @@ import { Theme } from './typings/data';
 
 const ioServer = io.listen(4240);
 if (process.env.ALLOWED_ORIGIN) {
-  ioServer.origins([process.env.ALLOWED_ORIGIN]);
+  ioServer.origins(process.env.ALLOWED_ORIGIN);
 }
 
 async function server(ioServer: Server) {

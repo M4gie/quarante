@@ -9,10 +9,10 @@ type Env = {
 
 const ENV: Env = {
   dev: {
-    serverUrl: 'ws://localhost:4240/',
+    serverUrl: 'http://localhost:4240/',
   },
   prod: {
-    serverUrl: 'wss://socket.quarante.m4gie.com/',
+    serverUrl: 'https://socket.quarante.m4gie.com/',
   },
 };
 
