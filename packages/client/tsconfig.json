@@ -8,10 +8,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*", "assets/*"],
-      "assets/*": ["assets/*"]
-    }
-  }
+    "baseUrl": "."
+  },
+  "references": [{ "path": "../api" }]
 }
