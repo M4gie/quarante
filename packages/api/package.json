@@ -1,11 +1,11 @@
 {
   "name": "quarante-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "build": "node ace build",
     "start": "node ace serve --watch",
-    "ts": "tsc --incremental false --noEmit",
+    "type-check": "tsc --incremental false --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0"
   },
   "devDependencies": {

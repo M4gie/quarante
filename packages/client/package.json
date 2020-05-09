@@ -1,5 +1,6 @@
 {
   "name": "quarante-client",
+  "version": "0.0.1",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -7,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "ts": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0",
     "build": "expo build:web"
   },

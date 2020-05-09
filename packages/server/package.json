@@ -1,6 +1,6 @@
 {
   "name": "quarante-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "author": "",
@@ -8,8 +8,7 @@
   "scripts": {
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "ts": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0"
   },
   "dependencies": {
@@ -26,6 +25,7 @@
     "eslint-config-universe": "^3.0.0",
     "nodemon": "^2.0.3",
     "prettier": "^2.0.4",
+    "quarante-api": "0.0.1",
     "ts-node": "^8.8.2",
     "typescript": "^3.8.3"
   },
