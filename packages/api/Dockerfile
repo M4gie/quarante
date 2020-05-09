@@ -1,14 +1,17 @@
-FROM node:12.16.3 as builder
-RUN apt install git
+FROM node:12.16.3-alpine as builder
+RUN apk add git --no-cache
 WORKDIR /app
 COPY package.json .
-RUN yarn
-COPY . .
+COPY yarn.lock .
+COPY packages/api ./packages/api
+RUN yarn install --pure-lockfile --non-interactive
+WORKDIR /app/packages/api
 RUN node ace build --production
-RUN yarn install --production --cwd ./build
+WORKDIR /app/packages/api/build
+RUN yarn install --production
 
 FROM node:12.16.3-alpine
 WORKDIR /app
-COPY --from=builder /app/build .
+COPY --from=builder /app/packages/api/build .
 EXPOSE 3333
 CMD ["node", "server.js"]
