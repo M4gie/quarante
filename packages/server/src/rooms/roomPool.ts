@@ -2,10 +2,10 @@
  * RoomPool object
  */
 
+import Theme from 'quarante-api/build/app/Models/Theme';
 import { Server } from 'socket.io';
 
 import Classic from '../games/classic';
-import { Theme } from '../typings/data';
 
 type Props = {
   themes: Theme[];
@@ -37,9 +37,9 @@ export default class RoomPool {
     this.rooms.push(room);
   };
 
-  getRooms = (): { theme: string; id: string }[] => {
+  getRooms = (): { theme: Theme; id: string }[] => {
     const roomNames = this.rooms.map(({ theme, id }) => {
-      return { theme: theme.title, id };
+      return { theme, id };
     });
     return roomNames;
   };

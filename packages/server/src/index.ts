@@ -1,9 +1,9 @@
 import 'dotenv/config';
+import Theme from 'quarante-api/build/app/Models/Theme';
 import io, { Socket, Server } from 'socket.io';
 
 import { getThemes } from './requests';
 import RoomPool from './rooms/roomPool';
-import { Theme } from './typings/data';
 
 const ioServer = io.listen(4240);
 if (process.env.ALLOWED_ORIGIN) {

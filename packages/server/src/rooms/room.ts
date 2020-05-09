@@ -3,10 +3,10 @@
  */
 
 import { EventEmitter } from 'events';
+import Theme from 'quarante-api/build/app/Models/Theme';
 import { Namespace, Socket } from 'socket.io';
 
 import Player from '../player';
-import { Theme } from '../typings/data';
 
 export type RoomProps = {
   theme: Theme;

@@ -2,12 +2,12 @@
  * Classic game object
  */
 
+import Round from 'quarante-api/build/app/Models/Round';
 import { Socket } from 'socket.io';
 
 import Player from '../player';
 import { getRandomRounds } from '../requests';
 import Room, { RoomProps, RoomStatus } from '../rooms/room';
-import { Round } from '../typings/data';
 
 export enum GameType {
   Classic,

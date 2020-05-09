@@ -1,4 +1,6 @@
-import { Theme, Round } from '../typings/data';
+import Round from 'quarante-api/build/app/Models/Round';
+import Theme from 'quarante-api/build/app/Models/Theme';
+
 import request from './axiosWrap';
 
 export async function getThemes(): Promise<Theme[]> {
