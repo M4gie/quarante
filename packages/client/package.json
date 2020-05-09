@@ -25,8 +25,7 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-web": "~0.11.7",
-    "socket.io-client": "^2.3.0",
-    "styled-components": "^5.1.0"
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -39,8 +38,7 @@
     "eslint": "^6.8.0",
     "eslint-config-universe": "^3.0.0",
     "prettier": "^2.0.5",
-    "typescript": "~3.8.3",
-    "typescript-plugin-styled-components": "^1.4.4"
+    "typescript": "^3.8.3"
   },
   "eslintConfig": {
     "extends": "universe/native"

@@ -2,7 +2,6 @@ FROM node:12.16.3 as builder
 RUN apt install git
 WORKDIR /app
 COPY package.json .
-COPY yarn.lock .
 RUN yarn
 COPY . .
 RUN node ace build --production

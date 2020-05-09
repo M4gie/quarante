@@ -1,4 +1,4 @@
-name: "[PUBLISH] build and publish all services"
+name: "Publish new release"
 
 on: push
 
@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
-        working-directory: client
+        working-directory: packages/client
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -31,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: client
+        working-directory: packages/client
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -50,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: api
+        working-directory: packages/api
     steps:
       - uses: actions/checkout@v2
       - name: Publish to Registry
@@ -61,7 +60,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           tags: "latest"
-          workdir: ./api
+          workdir: ./packages/api
       - name: Execute deploy script on VPS with ssh
         uses: appleboy/ssh-action@master
         with:
@@ -75,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: server
+        working-directory: packages/server
     steps:
       - uses: actions/checkout@v2
       - name: Publish to Registry
@@ -86,7 +85,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           tags: "latest"
-          workdir: ./server
+          buildoptions: "-f packages/server/Dockerfile"
       - name: Execute deploy script on VPS with ssh
         uses: appleboy/ssh-action@master
         with:

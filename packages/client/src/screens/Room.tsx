@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TextInput, Button } from 'react-native';
-import io from 'socket.io-client';
-import styled from 'styled-components/native';
+import React from 'react';
+import { View } from 'react-native';
 
-import getEnv from '../constant';
-import { HomeNavigatorProps } from '../typings/navigation';
-
-export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  const [answer, setAnswer] = useState('');
+export default function Room(/* { route, navigation }: HomeNavigatorProps<'Room'> */) {
+  /*   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
   const [players, setPlayers] = useState([]);
   const [playerAnswer, setPlayerAnswer] = useState('');
@@ -27,11 +22,12 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   }, []);
 
   function emitAnswer() {
-    /* socket.emit('guess', playerAnswer); */
-  }
+    socket.emit('guess', playerAnswer);
+  } */
 
   return (
-    <Container>
+    <View />
+    /*     <Container>
       <Text>Réponse: {answer}</Text>
       <Text>Citation: {question}</Text>
       <Text>Joueurs: </Text>
@@ -43,13 +39,13 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
       <Text>Donner une réponse: </Text>
       <TextInput onChangeText={(text) => setPlayerAnswer(text)} />
       <Button title="Envoyer" onPress={emitAnswer} />
-    </Container>
+    </Container> */
   );
 }
 
-const Container = styled.View`
+/* const Container = styled.View`
   flex: 1;
   background-color: #fff;
   align-items: center;
   justify-content: center;
-`;
+`; */

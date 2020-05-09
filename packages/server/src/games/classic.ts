@@ -76,7 +76,7 @@ export default class Classic extends Room {
   };
 
   gameLoop = () => {
-    this.roundTimer = setInterval(() => {
+    this.roundTimer = global.setInterval(() => {
       const topPlayer = this.getTopPlayer();
       if (topPlayer && topPlayer.score >= 40) {
         this.emit(GameEvent.Winner, topPlayer.name);
@@ -86,7 +86,7 @@ export default class Classic extends Room {
       } else {
         this.isGuessTime = true;
         this.emitQuestion();
-        this.answerTimer = setTimeout(() => {
+        this.answerTimer = global.setTimeout(() => {
           this.isGuessTime = false;
           this.setPlayersCanGuess(true);
           this.emitAnswer();
