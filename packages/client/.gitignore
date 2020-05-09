@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 web-report/
 .netlify/
+__generated__
 
 # macOS
 .DS_Store

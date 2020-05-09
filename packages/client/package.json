@@ -1,7 +1,7 @@
 {
   "name": "quarante-client",
   "version": "0.0.1",
-  "main": "../../node_modules/expo/AppEntry.js",
+  "main": "__generated__/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -10,7 +10,7 @@
     "eject": "expo eject",
     "type-check": "tsc --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0",
-    "build": "expo build:web"
+    "postinstall": "expo-yarn-workspaces postinstall"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
@@ -37,6 +37,8 @@
     "babel-preset-expo": "~8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-universe": "^3.0.0",
+    "expo-yarn-workspaces": "^1.2.1",
+    "metro-config": "^0.59.0",
     "prettier": "^2.0.5",
     "typescript": "^3.8.3"
   },

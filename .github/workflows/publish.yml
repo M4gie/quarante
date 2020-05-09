@@ -60,7 +60,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: ${{ secrets.DOCKER_REGISTRY }}
           tags: "latest"
-          workdir: ./packages/api
+          buildoptions: "-f packages/api/Dockerfile"
       - name: Execute deploy script on VPS with ssh
         uses: appleboy/ssh-action@master
         with:
