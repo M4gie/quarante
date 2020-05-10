@@ -1,0 +1,19 @@
+name: "Check mandatories (lint, tsc)"
+
+on: [push, pull_request]
+
+jobs:
+  lint-build:
+    name: lint, test and type check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn api build
+      - run: yarn lint
+      - run: yarn type-check
+      # Maybe soon
+      # - uses: jsmrcaga/action-netlify-deploy@master
+      #     with:
+      #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
