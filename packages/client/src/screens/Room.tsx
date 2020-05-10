@@ -5,7 +5,8 @@ import io from 'socket.io-client';
 import getEnv from '../constant/index';
 import { HomeNavigatorProps } from '../typings/navigation';
 
-export default function Room({ route }: HomeNavigatorProps<'Room'>) {
+export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
+  navigation.setOptions({ headerTitle: route.params.title });
   const socket: SocketIOClient.Socket = io(getEnv().serverUrl + route.params.id);
   return (
     <View style={styles.container}>

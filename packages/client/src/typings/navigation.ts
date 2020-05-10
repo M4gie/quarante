@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 export type HomeStackParamList = {
   Home: undefined;
-  Room: { id: string };
+  Room: { id: string; title: string };
 };
 
 export type HomeRouteProp<T extends keyof HomeStackParamList> = RouteProp<HomeStackParamList, T>;

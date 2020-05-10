@@ -27,7 +27,9 @@ export default function Home({ navigation }: Props) {
     <View style={[styles.container, { backgroundColor: colors.primary }]}>
       <Title style={{ fontSize: 24 }}>Salons:</Title>
       {rooms.map((room) => (
-        <Text onPress={() => navigation.navigate('Room', { id: room.id })} key={room.id}>
+        <Text
+          onPress={() => navigation.navigate('Room', { id: room.id, title: room.theme.title })}
+          key={room.id}>
           {room.theme.title}
         </Text>
       ))}
