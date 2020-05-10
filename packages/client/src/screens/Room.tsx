@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import io from 'socket.io-client';
 
@@ -7,21 +8,22 @@ import { HomeNavigatorProps } from '../typings/navigation';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
   navigation.setOptions({ headerTitle: route.params.title });
-  const socket: SocketIOClient.Socket = io(getEnv().serverUrl + route.params.id);
-  return (
-    <View style={styles.container}>
-      <RoomContent socket={socket} />
-    </View>
-  );
-}
-
-function RoomContent({ socket }: { socket: SocketIOClient.Socket }) {
+  let socket: SocketIOClient.Socket | null = null;
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
   const [players, setPlayers] = useState<{ name: string; score: number }[]>([]);
   const [playerAnswer, setPlayerAnswer] = useState('');
 
-  useEffect(function mount() {
+  useFocusEffect(
+    React.useCallback(() => {
+      socket = io(getEnv().serverUrl + route.params.id);
+      addSocketListener();
+      return () => socket?.close();
+    }, [])
+  );
+
+  function addSocketListener(): void {
+    if (!socket) return;
     socket.on('answer', (data: any) => {
       setAnswer(data);
     });
@@ -31,10 +33,12 @@ function RoomContent({ socket }: { socket: SocketIOClient.Socket }) {
     socket.on('players', (data: any) => {
       setPlayers(data);
     });
-  }, []);
+  }
 
   function emitAnswer() {
-    socket.emit('guess', playerAnswer);
+    if (socket) {
+      socket.emit('guess', playerAnswer);
+    }
   }
 
   return (
