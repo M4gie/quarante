@@ -1,6 +1,7 @@
 import Theme from 'quarante-api/build/app/Models/Theme';
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Text, useTheme, Title, Divider } from 'react-native-paper';
 import io from 'socket.io-client';
 
 import getEnv from '../constant/index';
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function Home({ navigation }: Props) {
+  const { colors } = useTheme();
   const [rooms, setRooms] = useState<{ theme: Theme; id: string }[]>([]);
   let socket = null;
 
@@ -22,8 +24,8 @@ export default function Home({ navigation }: Props) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Rooms:</Text>
+    <View style={[styles.container, { backgroundColor: colors.primary }]}>
+      <Title style={{ fontSize: 24 }}>Salons:</Title>
       {rooms.map((room) => (
         <Text onPress={() => navigation.navigate('Room', { id: room.id })} key={room.id}>
           {room.theme.title}
@@ -36,7 +38,6 @@ export default function Home({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
