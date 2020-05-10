@@ -16,7 +16,7 @@ export default function HomeStack() {
       screenOptions={{
         headerTitleAlign: 'center',
         headerTintColor: colors.text,
-        headerStyle: { backgroundColor: colors.accent },
+        headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.text },
         headerTitleStyle: { fontFamily: 'zilla-slab-medium' },
       }}>
       <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
