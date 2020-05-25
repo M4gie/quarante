@@ -14,7 +14,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   let socket: SocketIOClient.Socket | null = null;
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
-  /* const [players, setPlayers] = useState<{ name: string; score: number }[]>([]); */
+  const [players, setPlayers] = useState<{ name: string; score: number }[]>([]);
   const [isQuestionTime, setisQuestionTime] = useState(false);
 
   useFocusEffect(
@@ -35,9 +35,9 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
       setQuestion(data);
       setisQuestionTime(true);
     });
-    /* socket.on('players', (data: any) => {
+    socket.on('players', (data: any) => {
       setPlayers(data);
-    }); */
+    });
   }
 
   return (
@@ -50,6 +50,13 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
       <View style={styles.info}>
         <Text style={{ fontSize: 30 }}>{question}</Text>
       </View>
+      <View style={styles.score}>
+        {players.map((player) => (
+          <Text key={player.name}>
+            {player.name} - {player.score}
+          </Text>
+        ))}
+      </View>
       <GameInput socket={socket} />
     </CenterContainer>
   );
@@ -59,6 +66,11 @@ const styles = StyleSheet.create({
   info: {
     marginBottom: 'auto',
     marginTop: 10,
+  },
+  score: {
+    position: 'absolute',
+    left: 0,
+    top: 20,
   },
   content: {
     marginTop: 'auto',
