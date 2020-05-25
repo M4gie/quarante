@@ -1,9 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import { Text, Button, useTheme } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import io from 'socket.io-client';
 
+import Button from '../components/Button';
+import CenterContainer from '../components/CenterContainer';
 import getEnv from '../constant/index';
 import { HomeNavigatorProps } from '../typings/navigation';
 
@@ -47,7 +49,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.primary }]}>
+    <CenterContainer>
       <View style={styles.info}>
         <Text style={{ fontSize: 20 }}>
           {!isQuestionTime && answer !== '' && `La réponse était: ${answer}`}
@@ -63,23 +65,13 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
           multiline={false}
           style={[styles.input, { backgroundColor: colors.text }]}
         />
-        <Button
-          onPress={emitAnswer}
-          theme={{ roundness: 0 }}
-          style={[styles.button, { backgroundColor: colors.text }]}>
-          Envoyer
-        </Button>
+        <Button>Envoyer</Button>
       </View>
-    </View>
+    </CenterContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   info: {
     marginBottom: 'auto',
     marginTop: 10,
@@ -98,17 +90,4 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 2,
     paddingLeft: 8,
   },
-  button: {
-    borderBottomRightRadius: 2,
-    borderTopRightRadius: 2,
-  },
 });
-
-/*
-      <Text>Joueurs: </Text>
-      {players.map((player) => (
-        <Text key={player.name}>
-          {player.name} {player.score}
-        </Text>
-      ))} 
- */
