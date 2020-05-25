@@ -1,22 +1,20 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'react-native-paper';
 import io from 'socket.io-client';
 
-import Button from '../components/Button';
 import CenterContainer from '../components/CenterContainer';
+import GameInput from '../components/GameInput';
 import getEnv from '../constant/index';
 import { HomeNavigatorProps } from '../typings/navigation';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  const { colors } = useTheme();
   navigation.setOptions({ headerTitle: route.params.title });
   let socket: SocketIOClient.Socket | null = null;
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
   /* const [players, setPlayers] = useState<{ name: string; score: number }[]>([]); */
-  const [playerAnswer, setPlayerAnswer] = useState('');
   const [isQuestionTime, setisQuestionTime] = useState(false);
 
   useFocusEffect(
@@ -42,12 +40,6 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
     }); */
   }
 
-  function emitAnswer() {
-    if (socket) {
-      socket.emit('guess', playerAnswer);
-    }
-  }
-
   return (
     <CenterContainer>
       <View style={styles.info}>
@@ -58,15 +50,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
       <View style={styles.info}>
         <Text style={{ fontSize: 30 }}>{question}</Text>
       </View>
-      <View style={styles.answer}>
-        <TextInput
-          value={playerAnswer}
-          onChangeText={(text) => setPlayerAnswer(text)}
-          multiline={false}
-          style={[styles.input, { backgroundColor: colors.text }]}
-        />
-        <Button>Envoyer</Button>
-      </View>
+      <GameInput socket={socket} />
     </CenterContainer>
   );
 }
@@ -79,15 +63,5 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 'auto',
     marginBottom: 'auto',
-  },
-  answer: {
-    flexDirection: 'row',
-    marginTop: 'auto',
-    marginBottom: 10,
-  },
-  input: {
-    borderBottomLeftRadius: 2,
-    borderTopLeftRadius: 2,
-    paddingLeft: 8,
   },
 });
