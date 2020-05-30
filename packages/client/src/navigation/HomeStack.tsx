@@ -3,8 +3,8 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 
 import Home from '../screens/Home';
+import Room from '../screens/Room';
 import { HomeStackParamList } from '../typings/navigation';
-import RoomTopTab from './RoomTopTab';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -20,7 +20,7 @@ export default function HomeStack() {
         headerTitleStyle: { fontFamily: 'zilla-slab-medium' },
       }}>
       <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
-      <Stack.Screen name="Room" component={RoomTopTab} />
+      <Stack.Screen name="Room" component={Room} />
     </Stack.Navigator>
   );
 }
