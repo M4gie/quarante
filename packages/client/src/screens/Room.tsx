@@ -1,38 +1,53 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import React from 'react';
+import { Dimensions } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import io from 'socket.io-client';
 
-import CenterContainer from '../components/CenterContainer';
-import GameInput from '../components/GameInput';
 import getEnv from '../constant/index';
+import answerState from '../global/answer';
+import playersState from '../global/players';
+import questionState from '../global/question';
+import socketState from '../global/socket';
 import { HomeNavigatorProps } from '../typings/navigation';
+import Game from './Game';
+import Score from './Score';
+
+const initialLayout = { width: Dimensions.get('window').width };
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  let socket: SocketIOClient.Socket | null = null;
-  const [answer, setAnswer] = useState('');
-  const [question, setQuestion] = useState('');
-  const [players, setPlayers] = useState<{ name: string; score: number }[]>([]);
-  const [isQuestionTime, setisQuestionTime] = useState(false);
+  const [socket, setSocket] = useRecoilState(socketState);
+  const setAnswer = useSetRecoilState(answerState);
+  const setQuestion = useSetRecoilState(questionState);
+  const setPlayers = useSetRecoilState(playersState);
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Jeu' },
+    { key: 'second', title: 'Score' },
+  ]);
+
+  const renderScene = SceneMap({
+    first: Game,
+    second: Score,
+  });
 
   useFocusEffect(
     React.useCallback(() => {
-      socket = io(getEnv().serverUrl + 1 /* route.params.id */);
-      addSocketListener();
+      const tmpSocket = io(getEnv().serverUrl + 0);
+      setSocket(tmpSocket);
+      addSocketListener(tmpSocket);
       return () => socket?.close();
     }, [])
   );
 
-  function addSocketListener(): void {
-    if (!socket) return;
+  function addSocketListener(socket: SocketIOClient.Socket): void {
+    if (socket === null) return;
     socket.on('answer', (data: any) => {
       setAnswer(data);
-      setisQuestionTime(false);
     });
     socket.on('question', (data: any) => {
       setQuestion(data);
-      setisQuestionTime(true);
     });
     socket.on('players', (data: any) => {
       setPlayers(data);
@@ -40,39 +55,22 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   }
 
   return (
-    <CenterContainer>
-      <View style={styles.info}>
-        <Text style={{ fontSize: 20 }}>
-          {!isQuestionTime && answer !== '' && `La réponse était: ${answer}`}
-        </Text>
-      </View>
-      <View style={styles.info}>
-        <Text style={{ fontSize: 30 }}>{question}</Text>
-      </View>
-      <View style={styles.score}>
-        {players.map((player) => (
-          <Text key={player.name}>
-            {player.name} - {player.score}
-          </Text>
-        ))}
-      </View>
-      <GameInput socket={socket} />
-    </CenterContainer>
+    <TabView
+      renderTabBar={RenderTabBar}
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={initialLayout}
+    />
   );
 }
 
-const styles = StyleSheet.create({
-  info: {
-    marginBottom: 'auto',
-    marginTop: 10,
-  },
-  score: {
-    position: 'absolute',
-    left: 0,
-    top: 20,
-  },
-  content: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-});
+const RenderTabBar = (props) => {
+  return (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: 'white' }}
+      style={{ backgroundColor: '#272745' }}
+    />
+  );
+};
