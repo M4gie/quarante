@@ -10,7 +10,6 @@ import getEnv from '../constant/index';
 import { HomeNavigatorProps } from '../typings/navigation';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  navigation.setOptions({ headerTitle: route.params.title });
   let socket: SocketIOClient.Socket | null = null;
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState('');
@@ -19,7 +18,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
 
   useFocusEffect(
     React.useCallback(() => {
-      socket = io(getEnv().serverUrl + route.params.id);
+      socket = io(getEnv().serverUrl + 1 /* route.params.id */);
       addSocketListener();
       return () => socket?.close();
     }, [])
