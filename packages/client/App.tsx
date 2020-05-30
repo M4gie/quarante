@@ -22,7 +22,7 @@ export default function App() {
     <>
       {fontLoaded ? (
         <PaperProvider theme={theme}>
-          <NavigationContainer>
+          <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
             <HomeStack />
           </NavigationContainer>
         </PaperProvider>
