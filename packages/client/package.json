@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
+    "@react-navigation/material-top-tabs": "^5.2.9",
     "@react-navigation/native": "^5.2.4",
     "@react-navigation/stack": "^5.2.19",
     "expo": "~37.0.3",
@@ -26,6 +27,7 @@
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
+    "react-native-tab-view": "^2.14.2",
     "react-native-web": "~0.11.7",
     "socket.io-client": "^2.3.0"
   },
