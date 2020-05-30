@@ -1710,6 +1710,13 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/recoil@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/recoil/-/recoil-0.0.0.tgz#1a77a5d50d6a398b7b16b4464e516761efcbab8d"
+  integrity sha512-i00Sidw/UDe6jxCJrY5HotFfKIMIbKHGf5chJw7AsxdHe7G8m/ot71AcnbLOS1rLTtnXnENQcf8upKYsGJNvyA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/socket.io-client@^1.4.32":
   version "1.4.32"
   resolved "https://registry.yarnpkg.com/@types/socket.io-client/-/socket.io-client-1.4.32.tgz#988a65a0386c274b1c22a55377fab6a30789ac14"

@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
+import { RecoilRoot } from 'recoil';
 
 import theme from './src/constant/theme';
 import HomeStack from './src/navigation/HomeStack';
@@ -20,15 +21,17 @@ export default function App() {
 
   return (
     <>
-      {fontLoaded ? (
-        <PaperProvider theme={theme}>
-          <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
-            <HomeStack />
-          </NavigationContainer>
-        </PaperProvider>
-      ) : (
-        <ActivityIndicator />
-      )}
+      <RecoilRoot>
+        {fontLoaded ? (
+          <PaperProvider theme={theme}>
+            <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
+              <HomeStack />
+            </NavigationContainer>
+          </PaperProvider>
+        ) : (
+          <ActivityIndicator />
+        )}
+      </RecoilRoot>
     </>
   );
 }
