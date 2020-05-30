@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { useRecoilValue } from 'recoil';
 
 import Button from '../components/Button';
+import socketState from '../global/socket';
 
-type GameInputProps = {
-  socket: SocketIOClient.Socket | null;
-};
-
-export default function GameInput(props: GameInputProps) {
+export default function GameInput() {
   const [playerAnswer, setPlayerAnswer] = useState('');
+  const socket = useRecoilValue(socketState);
   const { colors } = useTheme();
 
   function emitAnswer() {
-    if (props.socket) {
-      props.socket.emit('guess', playerAnswer);
+    if (socket) {
+      socket.emit('guess', playerAnswer);
     }
   }
 
