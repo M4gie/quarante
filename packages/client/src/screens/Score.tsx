@@ -1,12 +1,20 @@
 import React from 'react';
+import { Text } from 'react-native';
+import { useRecoilValue } from 'recoil';
 
-import Button from '../components/Button';
 import CenterContainer from '../components/CenterContainer';
+import playersState from '../global/players';
 
 export default function Score() {
+  const players = useRecoilValue(playersState);
+
   return (
     <CenterContainer>
-      <Button>Score</Button>
+      {players.map((player) => (
+        <Text key={player.name} style={{ color: '#FFF' }}>
+          {player.name} - {player.score}
+        </Text>
+      ))}
     </CenterContainer>
   );
 }
