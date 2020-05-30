@@ -65,7 +65,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   );
 }
 
-const RenderTabBar = (props) => {
+const RenderTabBar = (props: any) => {
   return (
     <TabBar
       {...props}
