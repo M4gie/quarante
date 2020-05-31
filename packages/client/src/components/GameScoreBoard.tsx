@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Text } from 'react-native-paper';
-import { useRecoilValue } from 'recoil';
 
-import socketState from '../global/socket';
+import { useSocketListener } from '../utils/hooks/socketListener';
 
 export default function GameScoreBoard() {
-  const socket = useRecoilValue(socketState);
   const [players, setPlayers] = useState<{ name: string; score: number }[]>([]);
+  const data = useSocketListener('players', []);
 
   useEffect(() => {
-    listenPlayers();
-  }, []);
-
-  function listenPlayers() {
-    if (socket === null) return;
-    socket.on('players', (data: any) => {
-      setPlayers(data);
-    });
-  }
+    setPlayers(data);
+  }, [data]);
 
   return (
     <>
