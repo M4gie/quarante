@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -6,10 +6,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import CenterContainer from '../components/CenterContainer';
 import GameInput from '../components/GameInput';
 import answerState from '../global/answer';
+import isQuestionTimeState from '../global/isQuestionTimeState';
 import questionState from '../global/question';
 
 export default function Game() {
-  const [isQuestionTime] = useState(false);
+  const isQuestionTime = useRecoilValue(isQuestionTimeState);
   const answer = useRecoilValue(answerState);
   const question = useRecoilState(questionState);
 

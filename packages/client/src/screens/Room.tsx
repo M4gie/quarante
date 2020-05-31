@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 
 import getEnv from '../constant/index';
 import answerState from '../global/answer';
+import isQuestionTimeState from '../global/isQuestionTimeState';
 import playersState from '../global/players';
 import questionState from '../global/question';
 import socketState from '../global/socket';
@@ -17,10 +18,12 @@ import Score from './Score';
 const initialLayout = { width: Dimensions.get('window').width };
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
+  navigation.setOptions({ headerTitle: route.params.title });
   const [socket, setSocket] = useRecoilState(socketState);
   const setAnswer = useSetRecoilState(answerState);
   const setQuestion = useSetRecoilState(questionState);
   const setPlayers = useSetRecoilState(playersState);
+  const setIsQuestionTime = useSetRecoilState(isQuestionTimeState);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'first', title: 'Jeu' },
@@ -34,7 +37,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
 
   useFocusEffect(
     React.useCallback(() => {
-      const tmpSocket = io(getEnv().serverUrl + 0);
+      const tmpSocket = io(getEnv().serverUrl + route.params.id);
       setSocket(tmpSocket);
       addSocketListener(tmpSocket);
       return () => socket?.close();
@@ -44,9 +47,11 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   function addSocketListener(socket: SocketIOClient.Socket): void {
     if (socket === null) return;
     socket.on('answer', (data: any) => {
+      setIsQuestionTime(false);
       setAnswer(data);
     });
     socket.on('question', (data: any) => {
+      setIsQuestionTime(true);
       setQuestion(data);
     });
     socket.on('players', (data: any) => {
