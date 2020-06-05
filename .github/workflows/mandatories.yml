@@ -31,9 +31,9 @@ jobs:
         with:
           expo-version: 3.x
           expo-cache: true
-      - run: yarn client expo build:web
+      - run: yarn client expo build:web --no-pwa
       - name: run Lighthouse CI
         working-directory: ./packages/client/
         run: |
           npm install -g @lhci/cli@0.4.x
-          yarn client lhci autorun
+          lhci autorun
