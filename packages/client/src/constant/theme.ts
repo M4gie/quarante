@@ -3,19 +3,19 @@ import { Fonts } from 'react-native-paper/lib/typescript/src/types';
 
 const fonts: Fonts = {
   regular: {
-    fontFamily: 'zilla-slab-regular',
+    fontFamily: 'ZillaSlab_400Regular',
     fontWeight: 'normal',
   },
   medium: {
-    fontFamily: 'zilla-slab-medium',
+    fontFamily: 'ZillaSlab_500Medium',
     fontWeight: 'normal',
   },
   light: {
-    fontFamily: 'zilla-slab-light',
+    fontFamily: 'ZillaSlab_400Regular',
     fontWeight: 'normal',
   },
   thin: {
-    fontFamily: 'zilla-slab-regular',
+    fontFamily: 'ZillaSlab_400Regular',
     fontWeight: 'normal',
   },
 };
