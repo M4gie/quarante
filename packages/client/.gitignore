@@ -11,6 +11,7 @@ web-build/
 web-report/
 .netlify/
 __generated__
+.lighthouseci
 
 # macOS
 .DS_Store
