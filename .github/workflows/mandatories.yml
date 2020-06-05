@@ -17,3 +17,23 @@ jobs:
       #     with:
       #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - run: yarn install
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-cache: true
+      - run: yarn client expo build:web
+      - name: run Lighthouse CI
+        working-directory: ./packages/client/
+        run: |
+          npm install -g @lhci/cli@0.4.x
+          yarn client lhci autorun
