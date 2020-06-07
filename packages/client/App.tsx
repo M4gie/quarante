@@ -1,6 +1,5 @@
 import { useFonts, ZillaSlab_400Regular, ZillaSlab_500Medium } from '@expo-google-fonts/zilla-slab';
 import { NavigationContainer } from '@react-navigation/native';
-import { FontDisplay } from 'expo-font';
 import React from 'react';
 import { Platform } from 'react-native';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
@@ -10,15 +9,19 @@ import theme from './src/constant/theme';
 import HomeStack from './src/navigation/HomeStack';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    ZillaSlab_400Regular: { uri: ZillaSlab_400Regular, display: FontDisplay.SWAP },
-    ZillaSlab_500Medium: { uri: ZillaSlab_500Medium, display: FontDisplay.SWAP },
-  });
+  let fontsLoaded;
+
+  if (Platform.OS !== 'web') {
+    [fontsLoaded] = useFonts({
+      ZillaSlab_400Regular,
+      ZillaSlab_500Medium,
+    });
+  }
 
   return (
     <>
       <RecoilRoot>
-        {!fontsLoaded && Platform.OS !== 'web' ? (
+        {Platform.OS !== 'web' && !fontsLoaded ? (
           <ActivityIndicator />
         ) : (
           <PaperProvider theme={theme}>
