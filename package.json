@@ -3,12 +3,28 @@
   "workspaces": [
     "packages/*"
   ],
+  "devDependencies": {
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5"
+  },
   "scripts": {
     "api": "yarn workspace quarante-api",
     "client": "yarn workspace quarante-client",
     "server": "yarn workspace quarante-server",
     "lint": "yarn workspaces run lint",
     "type-check": "yarn workspaces run type-check",
+    "commit": "npx git-cz",
     "tsc": "echo No no no"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
   }
 }
