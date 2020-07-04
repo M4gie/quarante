@@ -1,12 +1,12 @@
 import React from 'react';
 
 import CenterContainer from '../components/CenterContainer';
-import GameScoreBoard from '../components/GameScoreBoard';
+import ScoreBoard from '../components/ScoreBoard/ScoreBoard';
 
 export default function Score() {
   return (
     <CenterContainer>
-      <GameScoreBoard />
+      <ScoreBoard />
     </CenterContainer>
   );
 }

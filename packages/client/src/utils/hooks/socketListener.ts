@@ -9,10 +9,10 @@ export function useSocketListener(event: string, defaultValue: any) {
   const [data, setData] = useState<any>(defaultValue);
 
   useEffect(() => {
-    listenQuestions();
+    listen();
   }, [socket]);
 
-  function listenQuestions() {
+  function listen() {
     if (socket === null) return;
     if (listener.current?.hasListeners) {
       listener.current.removeAllListeners();

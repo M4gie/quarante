@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import SceneMap from 'react-native-tab-view/src/SceneMap';
+import TabBar from 'react-native-tab-view/src/TabBar';
+import TabView from 'react-native-tab-view/src/TabView';
 
 import Game from '../screens/Game';
 import Score from '../screens/Score';

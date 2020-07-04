@@ -5,10 +5,12 @@ import CenterContainer from '../components/CenterContainer';
 import GameAnswer from '../components/GameAnswer';
 import GameInput from '../components/GameInput';
 import GameQuestion from '../components/GameQuestion';
+import { LargeScoreBoard } from '../components/ScoreBoard';
 
 export default function Game() {
   return (
     <CenterContainer>
+      <LargeScoreBoard />
       <View style={styles.info}>
         <GameAnswer />
       </View>

@@ -31,7 +31,7 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#24243E',
     accent: '#272745',
-    text: 'white',
+    text: '#FFF',
   },
   fonts: configureFonts(fontConfig),
 };
