@@ -14,6 +14,7 @@ export default function GameInput() {
   function emitAnswer() {
     if (socket) {
       socket.emit('guess', playerAnswer);
+      setPlayerAnswer('');
     }
   }
 

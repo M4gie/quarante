@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderWidth: 10,
     borderRadius: 50,
     padding: 20,
-    width: 400,
+    width: 300,
     height: 600,
   },
   containerTitle: {
