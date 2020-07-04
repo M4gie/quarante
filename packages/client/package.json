@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@expo/webpack-config": "^0.12.12",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
     "@types/recoil": "^0.0.0",
@@ -46,7 +47,8 @@
     "expo-yarn-workspaces": "^1.2.1",
     "metro-config": "^0.59.0",
     "prettier": "^2.0.5",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "eslintConfig": {
     "extends": "universe/native"
