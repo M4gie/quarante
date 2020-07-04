@@ -20,7 +20,13 @@ export default function HomeStack() {
         headerTitleStyle: { fontFamily: 'ZillaSlab_500Medium' },
       }}>
       <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
-      <Stack.Screen name="Room" component={Room} />
+      <Stack.Screen
+        name="Room"
+        component={Room}
+        options={{
+          headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.accent },
+        }}
+      />
     </Stack.Navigator>
   );
 }

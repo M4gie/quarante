@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useSetRecoilState } from 'recoil';
 
 import isQuestionTimeState from '../global/isQuestionTimeState';
+import timerState from '../global/timerState';
 import { useSocketListener } from '../utils/hooks/socketListener';
 
 export default function GameQuestion() {
-  const [question, setQuestion] = useState('');
+  const defaultValue = 'La partie va bientôt commencer !';
   const setIsQuestionTime = useSetRecoilState(isQuestionTimeState);
-  const data = useSocketListener('question', 'La partie va bientôt commencer !');
+  const question = useSocketListener('question', defaultValue);
+  const setTime = useSetRecoilState(timerState);
 
   useEffect(() => {
+    if (!question || question === defaultValue) return;
     setIsQuestionTime(true);
-    setQuestion(data);
-  }, [data]);
+    setTime(15);
+  }, [question]);
 
   return <Text style={styles.question}>{question}</Text>;
 }
