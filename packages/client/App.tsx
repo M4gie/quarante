@@ -1,27 +1,31 @@
-import { useFonts, ZillaSlab_400Regular, ZillaSlab_500Medium } from '@expo-google-fonts/zilla-slab';
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
 import { RecoilRoot } from 'recoil';
 
 import theme from './src/constant/theme';
 import HomeStack from './src/navigation/HomeStack';
+import loadFonts from './src/utils/fonts';
 
 export default function App() {
-  let fontsLoaded;
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-  if (Platform.OS !== 'web') {
-    [fontsLoaded] = useFonts({
-      ZillaSlab_400Regular,
-      ZillaSlab_500Medium,
-    });
-  }
+  const loadRessources = async () => {
+    await loadFonts();
+    setFontLoaded(true);
+  };
+
+  useEffect(function mount() {
+    if (Platform.OS !== 'web') {
+      loadRessources();
+    }
+  }, []);
 
   return (
     <>
       <RecoilRoot>
-        {Platform.OS !== 'web' && !fontsLoaded ? (
+        {Platform.OS !== 'web' && !fontLoaded ? (
           <ActivityIndicator />
         ) : (
           <PaperProvider theme={theme}>
