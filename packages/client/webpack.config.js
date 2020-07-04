@@ -10,6 +10,7 @@ module.exports = async (env, argv) => {
     config.plugins.push(
       new BundleAnalyzerPlugin({
         path: 'web-report',
+        analyzerMode: 'disabled',
       })
     );
   }
