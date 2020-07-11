@@ -24,7 +24,7 @@ export default function HomeStack() {
         name="Room"
         component={Room}
         options={{
-          headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.text },
+          headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.accent },
         }}
       />
     </Stack.Navigator>
