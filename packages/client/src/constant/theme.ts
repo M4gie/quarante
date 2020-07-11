@@ -36,4 +36,18 @@ const theme = {
   fonts: configureFonts(fontConfig),
 };
 
+const fontSizes = {
+  sm: 16,
+  md: 18,
+  lg: 25,
+  xl: 30,
+};
+
+const fontFamilies = {
+  regular: 'ZillaSlab_400Regular',
+  medium: 'ZillaSlab_500Medium',
+};
+
+export { fontSizes, fontFamilies };
+
 export default theme;

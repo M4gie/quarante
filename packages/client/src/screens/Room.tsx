@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import io from 'socket.io-client';
 
 import GameTab from '../components/GameTab';
-import Timer from '../components/Timer';
 import getEnv from '../constant/index';
 import socketState from '../global/socket';
 import { HomeNavigatorProps } from '../typings/navigation';
@@ -12,7 +11,7 @@ import { useScreenWidth } from '../utils/hooks/screenWidth';
 import Game from './Game';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  navigation.setOptions({ headerTitle: route.params.title });
+  navigation.setOptions({ headerTitle: /* route.params.title */ '' });
   const isLargeScreen = useScreenWidth();
   const [socket, setSocket] = useRecoilState(socketState);
 
@@ -26,7 +25,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
 
   return (
     <>
-      <Timer />
+      {/* <Timer /> */}
       {isLargeScreen ? <Game /> : <GameTab />}
     </>
   );
