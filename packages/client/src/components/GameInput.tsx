@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderRadius: 20,
-    minWidth: 400,
     paddingLeft: 8,
     marginRight: 20,
   },
