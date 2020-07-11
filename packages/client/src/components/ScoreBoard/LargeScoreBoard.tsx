@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import { useScreenWidth } from '../../utils/hooks/screenWidth';
@@ -17,18 +17,9 @@ export default function LargeScoreBoard() {
       style={[
         styles.container,
         {
-          borderColor: colors.text,
+          backgroundColor: colors.accent,
         },
       ]}>
-      <Text
-        style={[
-          styles.containerTitle,
-          {
-            color: colors.text,
-          },
-        ]}>
-        Classement
-      </Text>
       <GameScoreBoard />
     </View>
   );
@@ -36,19 +27,8 @@ export default function LargeScoreBoard() {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    borderWidth: 10,
-    borderRadius: 50,
-    padding: 20,
-    width: 300,
-    height: 600,
-  },
-  containerTitle: {
-    alignSelf: 'center',
-    fontSize: 20,
-    fontFamily: 'ZillaSlab_500Medium',
-    paddingBottom: 20,
+    minWidth: 350,
+    maxWidth: 350,
+    padding: 4,
   },
 });
