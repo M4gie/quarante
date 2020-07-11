@@ -4,7 +4,6 @@ import { useRecoilState } from 'recoil';
 import io from 'socket.io-client';
 
 import GameTab from '../components/GameTab';
-import Timer from '../components/Timer';
 import getEnv from '../constant/index';
 import socketState from '../global/socket';
 import { HomeNavigatorProps } from '../typings/navigation';
