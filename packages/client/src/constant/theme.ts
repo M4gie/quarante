@@ -40,7 +40,7 @@ const fontSizes = {
   sm: 16,
   md: 18,
   lg: 25,
-  xl: 30,
+  xl: 35,
 };
 
 const fontFamilies = {
