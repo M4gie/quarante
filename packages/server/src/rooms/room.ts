@@ -43,7 +43,7 @@ export default class Room {
   }
 
   addPlayer = (socket: Socket) => {
-    this.players.push(new Player({ name: socket.id, id: socket.id }));
+    this.players.push(new Player({ name: socket.handshake.query.pseudo, id: socket.id }));
     this.emitScoreBoard();
   };
 
