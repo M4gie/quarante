@@ -12,9 +12,11 @@ export default class Player {
   name: string;
   score: number = 0;
   canGuess: boolean = true;
+  avatar: number = 0;
 
   constructor(props: Props) {
     this.id = props.id;
     this.name = props.name;
+    this.avatar = Math.floor(Math.random() * Math.floor(10));
   }
 }
