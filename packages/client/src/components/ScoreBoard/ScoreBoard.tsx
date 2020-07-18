@@ -19,7 +19,10 @@ const avatars = [
 ];
 
 export default function ScoreBoard() {
-  const players: { name: string; score: number }[] = useSocketListener('players', []);
+  const players: { name: string; score: number; avatar: number }[] = useSocketListener(
+    'players',
+    []
+  );
   const { colors } = useTheme();
 
   return (
@@ -28,7 +31,7 @@ export default function ScoreBoard() {
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image
             style={styles.avatar}
-            source={require(`../../../assets/avatars/${avatars[0]}.png`)}
+            source={require(`../../../assets/avatars/${avatars[player.avatar]}.png`)}
           />
           <Text fontSize="lg" style={styles.pseudo}>
             {player.name}
