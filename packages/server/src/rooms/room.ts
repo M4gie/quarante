@@ -83,9 +83,9 @@ export default class Room {
     return this.players.find((player) => player.id === id);
   };
 
-  getPlayers = (): { name: string; score: number }[] => {
-    return this.players.map(({ name, score }) => {
-      return { name, score };
+  getPlayers = (): { name: string; score: number; avatar: number }[] => {
+    return this.players.map(({ name, score, avatar }) => {
+      return { name, score, avatar };
     });
   };
 
