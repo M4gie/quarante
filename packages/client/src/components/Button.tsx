@@ -9,15 +9,15 @@ type ButtonProps = {
   onPress?: () => void;
 };
 
-export default function Button(props: ButtonProps) {
+export default function Button({ style, ...props }: ButtonProps) {
   const { colors } = useTheme();
   return (
     <PaperButton
       {...props}
       style={[
-        props.style,
         styles.button,
         { backgroundColor: props.primary ? colors.primary : colors.text },
+        style,
       ]}>
       {props.children}
     </PaperButton>
