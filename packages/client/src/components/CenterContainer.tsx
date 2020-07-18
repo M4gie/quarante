@@ -7,9 +7,9 @@ type CenterContainerProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-export default function CenterContainer(props: CenterContainerProps) {
+export default function CenterContainer({ style, ...props }: CenterContainerProps) {
   const { colors } = useTheme();
-  return <View style={[styles.container, { backgroundColor: colors.primary }]} {...props} />;
+  return <View style={[styles.container, { backgroundColor: colors.primary }, style]} {...props} />;
 }
 
 const styles = StyleSheet.create({
