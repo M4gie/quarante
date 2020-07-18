@@ -1,6 +1,6 @@
 {
   "name": "quarante-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "__generated__/AppEntry.js",
   "scripts": {
     "start": "expo start",
