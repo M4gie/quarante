@@ -5,6 +5,19 @@ import { useTheme } from 'react-native-paper';
 import { useSocketListener } from '../../utils/hooks/socketListener';
 import Text from '../Text';
 
+const avatars = [
+  'alien',
+  'avocado',
+  'boom',
+  'burn',
+  'clown',
+  'eagle',
+  'fox',
+  'gun',
+  'robot',
+  'scream',
+];
+
 export default function ScoreBoard() {
   const players: { name: string; score: number }[] = useSocketListener('players', []);
   const { colors } = useTheme();
@@ -13,7 +26,10 @@ export default function ScoreBoard() {
     <ScrollView style={styles.container}>
       {players.map((player) => (
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
-          <Image style={styles.avatar} source={require('../../../assets/avatars/fox.png')} />
+          <Image
+            style={styles.avatar}
+            source={require(`../../../assets/avatars/${avatars[0]}.png`)}
+          />
           <Text fontSize="lg" style={styles.pseudo}>
             {player.name}
           </Text>
