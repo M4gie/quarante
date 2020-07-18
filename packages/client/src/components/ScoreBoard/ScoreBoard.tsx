@@ -15,7 +15,7 @@ export default function ScoreBoard() {
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image style={styles.avatar} source={require('../../../assets/avatars/fox.png')} />
           <Text fontSize="lg" style={styles.pseudo}>
-            SuperZouloux
+            {player.name}
           </Text>
           <Text fontSize="lg" fontFamily="medium" style={styles.score}>
             {player.score}
