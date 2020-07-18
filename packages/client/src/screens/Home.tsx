@@ -25,9 +25,7 @@ export default function Home({ navigation }: Props) {
   return (
     <CenterContainer>
       {rooms.map((room) => (
-        <Button
-          key={room.id}
-          onPress={() => navigation.navigate('Room', { id: room.id, title: room.theme.title })}>
+        <Button key={room.id} onPress={() => navigation.navigate('Room', { id: room.id })}>
           {room.theme.title}
         </Button>
       ))}

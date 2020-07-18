@@ -1,20 +1,23 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useSetRecoilState } from 'recoil';
 
+import CenterContainer from './src/components/CenterContainer';
+import Text from './src/components/Text';
 import theme from './src/constant/theme';
+import pseudoState from './src/global/pseudoState';
 import HomeStack from './src/navigation/HomeStack';
 import loadFonts from './src/utils/fonts';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  const loadRessources = async () => {
+  async function loadRessources() {
     await loadFonts();
     setFontLoaded(true);
-  };
+  }
 
   useEffect(function mount() {
     if (Platform.OS !== 'web') {
@@ -29,12 +32,41 @@ export default function App() {
           <ActivityIndicator />
         ) : (
           <PaperProvider theme={theme}>
-            <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
-              <HomeStack />
-            </NavigationContainer>
+            <AppWithProviders />
           </PaperProvider>
         )}
       </RecoilRoot>
     </>
+  );
+}
+
+function AppWithProviders() {
+  const [isLoading, setIsLoading] = useState(true);
+  const setPseudo = useSetRecoilState(pseudoState);
+
+  useEffect(function mount() {
+    getPseudo();
+  }, []);
+
+  async function getPseudo() {
+    const value = await AsyncStorage.getItem('pseudo');
+    if (value) {
+      setPseudo(JSON.parse(value));
+    }
+    setIsLoading(false);
+  }
+
+  if (isLoading) {
+    return (
+      <CenterContainer>
+        <Text fontSize="xl">Quarente</Text>
+      </CenterContainer>
+    );
+  }
+
+  return (
+    <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
+      <HomeStack />
+    </NavigationContainer>
   );
 }
