@@ -31,7 +31,9 @@ export default function ScoreBoard() {
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image
             style={styles.avatar}
-            source={require(`../../../assets/avatars/${avatars[player.avatar]}.png`)}
+            source={require(`../../../assets/avatars/${
+              avatars[player.avatar ? player.avatar : 0]
+            }.png`)}
           />
           <Text fontSize="lg" style={styles.pseudo}>
             {player.name}
