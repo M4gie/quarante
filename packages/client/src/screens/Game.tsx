@@ -6,9 +6,11 @@ import GameAnswer from '../components/GameAnswer';
 import GameInput from '../components/GameInput';
 import GameQuestion from '../components/GameQuestion';
 import { LargeScoreBoard } from '../components/ScoreBoard';
+import { useSocketListener } from '../utils/hooks/socketListener';
 
 export default function Game() {
   const { colors } = useTheme();
+  const question = useSocketListener('question', null);
   return (
     <View style={[styles.container, { backgroundColor: colors.primary }]}>
       <LargeScoreBoard />
@@ -17,9 +19,9 @@ export default function Game() {
           <GameAnswer />
         </View>
         <View style={styles.info}>
-          <GameQuestion />
+          <GameQuestion question={question} />
         </View>
-        <GameInput />
+        <GameInput question={question} />
       </View>
     </View>
   );

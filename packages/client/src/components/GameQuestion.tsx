@@ -4,12 +4,14 @@ import { useSetRecoilState } from 'recoil';
 
 import isQuestionTimeState from '../global/isQuestionTimeState';
 import timerState from '../global/timerState';
-import { useSocketListener } from '../utils/hooks/socketListener';
 import Text from './Text';
 
-export default function GameQuestion() {
+type GameQuestionProps = {
+  question: string;
+};
+
+export default function GameQuestion({ question }: GameQuestionProps) {
   const setIsQuestionTime = useSetRecoilState(isQuestionTimeState);
-  const question = useSocketListener('question', null);
   const setTime = useSetRecoilState(timerState);
 
   async function playSound() {
