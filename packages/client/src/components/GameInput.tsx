@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import React, { useState, createRef, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+} from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
 
@@ -8,24 +14,49 @@ import { fontSizes } from '../constant/theme';
 import socketState from '../global/socket';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
-export default function GameInput() {
+type GameInputProps = {
+  question: string;
+};
+
+export default function GameInput({ question }: GameInputProps) {
   const [playerAnswer, setPlayerAnswer] = useState('');
   const socket = useRecoilValue(socketState);
   const { colors } = useTheme();
   const isLargeScreen = useScreenWidth();
+  const inputRef = createRef<TextInput>();
 
   function emitAnswer() {
     if (socket) {
       socket.emit('guess', playerAnswer);
       setPlayerAnswer('');
+      focus();
+    }
+  }
+
+  async function checkKey(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
+    e.preventDefault();
+    if (e.nativeEvent.key === 'Enter') {
+      emitAnswer();
+    }
+  }
+
+  useEffect(() => {
+    focus();
+  }, [question]);
+
+  function focus() {
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   }
 
   return (
     <View style={styles.answer}>
       <TextInput
+        ref={inputRef}
         value={playerAnswer}
         onChangeText={(text) => setPlayerAnswer(text)}
+        onKeyPress={(e) => checkKey(e)}
         multiline={false}
         style={[
           styles.input,
