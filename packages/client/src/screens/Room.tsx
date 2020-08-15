@@ -3,18 +3,16 @@ import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import io from 'socket.io-client';
 
-import GameTab from '../components/GameTab';
+import Sound from '../components/Sound';
 import Timer from '../components/Timer';
 import getEnv from '../constant/index';
 import pseudoState from '../global/pseudoState';
 import socketState from '../global/socket';
 import { HomeNavigatorProps } from '../typings/navigation';
-import { useScreenWidth } from '../utils/hooks/screenWidth';
 import Game from './Game';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
   navigation.setOptions({ headerTitle: '' });
-  const isLargeScreen = useScreenWidth();
   const [socket, setSocket] = useRecoilState(socketState);
   const pseudo = useRecoilValue(pseudoState);
 
@@ -34,7 +32,8 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
   return (
     <>
       <Timer />
-      {isLargeScreen ? <Game /> : <GameTab />}
+      <Game />
+      <Sound />
     </>
   );
 }
