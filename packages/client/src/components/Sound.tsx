@@ -1,16 +1,13 @@
 import { Audio } from 'expo-av';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import isQuestionTimeState from '../global/isQuestionTimeState';
 import timerState from '../global/timerState';
-import Text from './Text';
+import { useSocketListener } from '../utils/hooks/socketListener';
 
-type GameQuestionProps = {
-  question: string;
-};
-
-export default function GameQuestion({ question }: GameQuestionProps) {
+export default function Sound() {
+  const question = useSocketListener('question', null);
   const setIsQuestionTime = useSetRecoilState(isQuestionTimeState);
   const setTime = useSetRecoilState(timerState);
 
@@ -25,8 +22,5 @@ export default function GameQuestion({ question }: GameQuestionProps) {
     playSound();
   }, [question]);
 
-  if (!question) {
-    return <Text fontSize="xl">La partie va bientôt commencer !</Text>;
-  }
   return null;
 }

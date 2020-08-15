@@ -1,4 +1,4 @@
-import React, { useState, createRef, useEffect } from 'react';
+import React, { useState, createRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,11 +14,7 @@ import { fontSizes } from '../constant/theme';
 import socketState from '../global/socket';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
-type GameInputProps = {
-  question: string;
-};
-
-export default function GameInput({ question }: GameInputProps) {
+export default function GameInput() {
   const [playerAnswer, setPlayerAnswer] = useState('');
   const socket = useRecoilValue(socketState);
   const { colors } = useTheme();
@@ -39,10 +35,6 @@ export default function GameInput({ question }: GameInputProps) {
       emitAnswer();
     }
   }
-
-  useEffect(() => {
-    focus();
-  }, [question]);
 
   function focus() {
     if (inputRef.current) {

@@ -1,4 +1,4 @@
-import LargeScoreBoard from './LargeScoreBoard';
 import ScoreBoard from './ScoreBoard';
+import ScoreBoardContent from './ScoreBoardContent';
 
-export { LargeScoreBoard, ScoreBoard };
+export { ScoreBoard, ScoreBoardContent };
