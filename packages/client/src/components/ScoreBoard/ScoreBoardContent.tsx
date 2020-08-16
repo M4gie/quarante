@@ -6,16 +6,25 @@ import { useSocketListener } from '../../utils/hooks/socketListener';
 import Text from '../Text';
 
 const avatars = [
-  'alien',
-  'avocado',
-  'boom',
-  'burn',
-  'clown',
-  'eagle',
-  'fox',
-  'gun',
-  'robot',
-  'scream',
+  'soup_tco0pn',
+  'tacos_ivvpfg',
+  'mouse_ozspc2',
+  'rhino_itvxcl',
+  'lion_otr9q1',
+  'robot_dhku5p',
+  'predict_hdpujp',
+  'eagle_voxbrn',
+  'eyes_ovwu8y',
+  'fox_zdizyq',
+  'gun_axbmgk',
+  'frog_rtdrex',
+  'fire_pxsxia',
+  'cat_bkvj6b',
+  'clown_mxirma',
+  'avocado_orvo7i',
+  'boom_lp38og',
+  'alien_vqnhob',
+  '100_tupma6',
 ];
 
 export default function ScoreBoardContent() {
@@ -31,9 +40,11 @@ export default function ScoreBoardContent() {
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image
             style={styles.avatar}
-            source={require(`../../../assets/avatars/${
-              avatars[player.avatar ? player.avatar : 0]
-            }.png`)}
+            source={{
+              uri: `https://res.cloudinary.com/m4gie/image/upload/v1597582316/icons/${
+                avatars[player.avatar ? player.avatar : 0]
+              }.png`,
+            }}
           />
           <Text fontSize="lg" style={styles.pseudo}>
             {player.name}
