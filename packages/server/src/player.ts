@@ -17,6 +17,6 @@ export default class Player {
   constructor(props: Props) {
     this.id = props.id;
     this.name = props.name;
-    this.avatar = Math.floor(Math.random() * Math.floor(10));
+    this.avatar = Math.floor(Math.random() * Math.floor(18));
   }
 }
