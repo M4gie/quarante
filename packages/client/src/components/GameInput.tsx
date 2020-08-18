@@ -5,6 +5,7 @@ import {
   TextInput,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
+  Platform,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    outlineWidth: 0,
+    ...(Platform.OS === 'web' && { outlineWidth: 0 }),
     borderRadius: 20,
     paddingLeft: 15,
     marginRight: 20,
