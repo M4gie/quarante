@@ -53,7 +53,7 @@ export default function GameInput() {
         multiline={false}
         style={[
           styles.input,
-          { backgroundColor: colors.text, width: isLargeScreen ? '30%' : '80%' },
+          { backgroundColor: colors.text, width: isLargeScreen ? '30%' : '50%' },
         ]}
       />
       <Button onPress={emitAnswer}>Envoyer</Button>
