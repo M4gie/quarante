@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Button from '../components/Button';
 import CenterContainer from '../components/CenterContainer';
-import { fontSizes } from '../constant/theme';
+import { fontSizes, fontFamilies } from '../constant/theme';
 import pseudoState from '../global/pseudoState';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     textAlign: 'center',
     height: 50,
-    fontFamily: 'ZillaSlab_400Regular',
+    fontFamily: fontFamilies.regular,
     fontSize: fontSizes.lg,
   },
 });

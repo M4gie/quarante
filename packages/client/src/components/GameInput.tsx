@@ -11,7 +11,7 @@ import { useTheme } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
 
 import Button from '../components/Button';
-import { fontSizes } from '../constant/theme';
+import { fontSizes, fontFamilies } from '../constant/theme';
 import socketState from '../global/socket';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingLeft: 15,
     marginRight: 20,
-    fontFamily: 'ZillaSlab_400Regular',
+    fontFamily: fontFamilies.regular,
     fontSize: fontSizes.lg,
   },
 });
