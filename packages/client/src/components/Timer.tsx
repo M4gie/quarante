@@ -17,7 +17,7 @@ export default function Timer() {
   Animated.timing(progress, {
     toValue: 100,
     duration: timer,
-    useNativeDriver: true,
+    useNativeDriver: false,
   }).start();
 
   return (
