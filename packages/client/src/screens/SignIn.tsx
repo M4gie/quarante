@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, AsyncStorage } from 'react-native';
+import { TextInput, StyleSheet, AsyncStorage, Platform } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useSetRecoilState } from 'recoil';
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   input: {
     borderTopStartRadius: 20,
     borderBottomStartRadius: 20,
-    outlineWidth: 0,
+    ...(Platform.OS === 'web' && { outlineWidth: 0 }),
     paddingLeft: 15,
     textAlign: 'center',
     height: 50,
