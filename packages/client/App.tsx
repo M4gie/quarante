@@ -30,7 +30,7 @@ export default function App() {
     <>
       <RecoilRoot>
         {Platform.OS !== 'web' && !fontLoaded ? (
-          <ActivityIndicator />
+          <ActivityIndicator focusable />
         ) : (
           <PaperProvider theme={theme}>
             <AppWithProviders />

@@ -13,6 +13,7 @@ export default function Button({ style, ...props }: ButtonProps) {
   const { colors } = useTheme();
   return (
     <PaperButton
+      focusable
       {...props}
       style={[
         styles.button,
