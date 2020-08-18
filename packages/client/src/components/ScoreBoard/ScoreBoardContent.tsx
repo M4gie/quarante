@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, Image } from 'react-native';
+import { ScrollView, View, StyleSheet, Image, Platform } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import { useSocketListener } from '../../utils/hooks/socketListener';
@@ -35,7 +35,7 @@ export default function ScoreBoardContent() {
   const { colors } = useTheme();
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={Platform.OS === 'web' && { height: '80vh' }}>
       {players.map((player) => (
         <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image
@@ -59,9 +59,6 @@ export default function ScoreBoardContent() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '80vh',
-  },
   card: {
     padding: 5,
     marginTop: 4,
