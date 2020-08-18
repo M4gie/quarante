@@ -3,6 +3,7 @@ import React from 'react';
 import { useTheme } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
 
+import { fontFamilies } from '../constant/theme';
 import pseudoState from '../global/pseudoState';
 import Home from '../screens/Home';
 import Room from '../screens/Room';
@@ -22,7 +23,7 @@ export default function HomeStack() {
         headerTitleAlign: 'center',
         headerTintColor: colors.text,
         headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.text },
-        headerTitleStyle: { fontFamily: 'ZillaSlab_500Medium' },
+        headerTitleStyle: { fontFamily: fontFamilies.medium },
       }}>
       {pseudo == null ? (
         <Stack.Screen
@@ -40,6 +41,7 @@ export default function HomeStack() {
             component={Room}
             options={{
               headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.accent },
+              headerBackTitleVisible: false,
             }}
           />
         </>

@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Button from '../components/Button';
 import CenterContainer from '../components/CenterContainer';
-import { fontSizes } from '../constant/theme';
+import { fontSizes, fontFamilies } from '../constant/theme';
 import pseudoState from '../global/pseudoState';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
@@ -30,10 +30,10 @@ export default function SignIn() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: colors.text, width: isLargeScreen ? '20%' : '80%' },
+          { backgroundColor: colors.text, width: isLargeScreen ? '20%' : '60%' },
         ]}
         maxLength={16}
-        placeholder="Pseudonyme"
+        placeholder="Pseudo"
         onChange={(data) => setPseudo(data.nativeEvent.text)}
         onKeyPress={(e) => checkKey(e.nativeEvent.key)}
       />
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   input: {
-    borderTopStartRadius: 20,
-    borderBottomStartRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 20,
     ...(Platform.OS === 'web' && { outlineWidth: 0 }),
     paddingLeft: 15,
     textAlign: 'center',
     height: 50,
-    fontFamily: 'ZillaSlab_400Regular',
+    fontFamily: fontFamilies.regular,
     fontSize: fontSizes.lg,
   },
 });

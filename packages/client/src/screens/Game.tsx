@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   info: {
+    marginTop: 'auto',
     marginBottom: 'auto',
-    marginTop: 10,
   },
 });

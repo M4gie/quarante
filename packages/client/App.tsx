@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Platform, AsyncStorage } from 'react-native';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
@@ -29,13 +30,17 @@ export default function App() {
     <>
       <RecoilRoot>
         {Platform.OS !== 'web' && !fontLoaded ? (
-          <ActivityIndicator />
+          <ActivityIndicator focusable />
         ) : (
           <PaperProvider theme={theme}>
             <AppWithProviders />
           </PaperProvider>
         )}
       </RecoilRoot>
+      <StatusBar
+        // eslint-disable-next-line react/style-prop-object
+        style="light"
+      />
     </>
   );
 }
