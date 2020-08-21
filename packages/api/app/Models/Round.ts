@@ -1,5 +1,7 @@
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm';
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm';
 import { DateTime } from 'luxon';
+
+import Answer from './Answer';
 
 export default class Round extends BaseModel {
   @column({ isPrimary: true })
@@ -9,7 +11,10 @@ export default class Round extends BaseModel {
   public data: string;
 
   @column()
-  public answer: string;
+  public description: string;
+
+  @hasMany(() => Answer)
+  public answers: HasMany<typeof Answer>;
 
   @column()
   public round_type_id: number;
