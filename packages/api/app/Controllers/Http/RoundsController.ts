@@ -37,7 +37,7 @@ export default class RoundsController {
     const { themes = [] }: { themes: number[] } = request.only(['themes']);
 
     if (!themes) return [];
-    const rounds = await Round.query().whereIn('theme_id', [6]).select('*');
+    const rounds = await Round.query().whereIn('theme_id', themes).preload('answers');
     const selectRounds: Round[] = [];
     for (let i = 0; i < 100 && rounds.length > 0; i++) {
       const rand = Math.floor(Math.random() * rounds.length);
