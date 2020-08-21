@@ -10,29 +10,29 @@ import Text from './Text';
 export default function GameAnswer() {
   const [isQuestionTime, setIsQuestionTime] = useRecoilState(isQuestionTimeState);
   const setTime = useSetRecoilState(timerState);
-  const answer = useSocketListener('answer', '');
+  const answers: string[] | null = useSocketListener('answer', null);
   const fontSize = Platform.OS === 'web' ? 'xl' : 'md';
 
   useEffect(() => {
-    if (!answer) return;
+    if (!answers) return;
     setIsQuestionTime(false);
     setTime(5);
-  }, [answer]);
+  }, [answers]);
 
-  if (!isQuestionTime && !answer) {
+  if (!isQuestionTime && !answers) {
     return (
       <Text fontSize={fontSize} fontFamily="regular" style={styles.text}>
         La partie va bientôt commencer !
       </Text>
     );
-  } else if (!isQuestionTime && answer !== '') {
+  } else if (!isQuestionTime && answers) {
     return (
       <>
         <Text fontSize={fontSize} fontFamily="regular" style={styles.text}>
-          La réponse était:
+          {answers.length > 1 ? 'Les réponses étaient:' : 'La réponse était:'}
         </Text>
         <Text fontSize={fontSize} fontFamily="medium" style={styles.text}>
-          {answer}
+          {answers.length > 1 ? answers.join(' / ') : answers}
         </Text>
       </>
     );
