@@ -5,6 +5,7 @@
 import Answer from 'quarante-api/app/Models/Answer';
 import Round from 'quarante-api/build/app/Models/Round';
 import { Socket } from 'socket.io';
+import stringSimilarity from 'string-similarity';
 
 import Player from '../player';
 import { getRandomRounds } from '../requests';
@@ -123,8 +124,9 @@ export default class Classic extends Room {
 
   playerGuess = (id: string, guess: string) => {
     const player = this.getPlayer(id);
-    if (!guess || !player) return;
-    if (player.canGuess === true && this.answers.includes(guess) && this.isGuessTime === true) {
+    if (!guess || !player || this.answers.length < 1) return;
+    const result = stringSimilarity.findBestMatch(guess.toLowerCase(), this.answers);
+    if (player.canGuess === true && result.bestMatch.rating >= 0.8 && this.isGuessTime === true) {
       this.setPlayerCanGuess(id, false);
       this.addPlayerPoint(id, 1);
     }
