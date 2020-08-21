@@ -2,6 +2,7 @@
  * Classic game object
  */
 
+import Answer from 'quarante-api/app/Models/Answer';
 import Round from 'quarante-api/build/app/Models/Round';
 import { Socket } from 'socket.io';
 
@@ -27,6 +28,7 @@ type Props = {
 };
 
 export default class Classic extends Room {
+  answers: string[] = [];
   answerTimer: NodeJS.Timeout | null = null;
   isGuessTime: boolean = false;
   maxPlayers: number;
@@ -57,7 +59,7 @@ export default class Classic extends Room {
   };
 
   emitAnswer = () => {
-    this.emit(GameEvent.Answer, this.currentRound?.answer);
+    this.emit(GameEvent.Answer, this.answers);
   };
 
   emitQuestion = async () => {
@@ -68,6 +70,7 @@ export default class Classic extends Room {
     if (newRound) {
       this.currentRound = newRound;
       this.emit(GameEvent.Question, this.currentRound.data);
+      this.answers = newRound.answers.map((answer: Answer) => answer.answer);
     }
   };
 
@@ -121,11 +124,7 @@ export default class Classic extends Room {
   playerGuess = (id: string, guess: string) => {
     const player = this.getPlayer(id);
     if (!guess || !player) return;
-    if (
-      player.canGuess === true &&
-      guess === this.currentRound?.answer &&
-      this.isGuessTime === true
-    ) {
+    if (player.canGuess === true && this.answers.includes(guess) && this.isGuessTime === true) {
       this.setPlayerCanGuess(id, false);
       this.addPlayerPoint(id, 1);
     }
