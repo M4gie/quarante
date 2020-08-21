@@ -7,7 +7,7 @@ export default class Rounds extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id');
       table.string('data', 500);
-      table.string('answer', 80);
+      table.string('description', 200);
       table.integer('round_type_id').unsigned();
       table.foreign('round_type_id').references('round_types.id').onDelete('CASCADE');
       table.integer('theme_id').unsigned();

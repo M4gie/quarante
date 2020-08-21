@@ -25,7 +25,11 @@ export default class RoundValidator {
    */
   public schema = schema.create({
     data: schema.string({ trim: true }, [rules.maxLength(500), rules.minLength(2)]),
-    answer: schema.string({ trim: true }, [rules.maxLength(80), rules.minLength(2)]),
+    answers: schema.array([rules.distinct('answer')]).members(
+      schema.object().members({
+        answer: schema.string({ trim: true }, [rules.maxLength(80), rules.minLength(1)]),
+      }),
+    ),
     round_type_id: schema.number(),
     theme_id: schema.number(),
   });
@@ -54,9 +58,9 @@ export default class RoundValidator {
     'data.required': 'Provide round data',
     'data.maxLength': 'Round data should not be more than 500 characters.',
     'data.minLength': 'Round data should not be less than 2 characters.',
-    'answer.required': 'Provide round answer',
-    'answer.maxLength': 'Round data should not be more than 80 characters.',
-    'answer.minLength': 'Round data should not be less than 2 characters.',
+    'answers.required': 'Provide round answer',
+    'answers.maxLength': 'Round data should not be more than 80 characters.',
+    'answers.minLength': 'Round data should not be less than 1 characters.',
     'round_type_id.required': 'Provide data type.',
     'theme_id.required': 'Provide theme.',
   };
