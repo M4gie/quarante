@@ -14,7 +14,6 @@ async function server(ioServer: Server) {
   let themes: Theme[] = [];
   try {
     themes = await getThemes();
-    console.log('Success getTheme: ', themes);
   } catch (e) {
     console.log('API request error (getThemes): ', e);
   }
