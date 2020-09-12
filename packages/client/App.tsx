@@ -64,7 +64,7 @@ function AppWithProviders() {
   if (isLoading) {
     return (
       <CenterContainer>
-        <Text fontSize="xl">Quarente</Text>
+        <Text fontSize="xl">Quarante</Text>
       </CenterContainer>
     );
   }

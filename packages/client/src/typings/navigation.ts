@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 export type HomeStackParamList = {
   SignIn: undefined;
   Home: undefined;
+  Upload: undefined;
   Room: { id: string };
 };
 

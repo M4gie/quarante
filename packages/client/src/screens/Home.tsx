@@ -29,6 +29,7 @@ export default function Home({ navigation }: Props) {
           {room.theme.title}
         </Button>
       ))}
+      <Button onPress={() => navigation.navigate('Upload')}>Proposer un son</Button>
     </CenterContainer>
   );
 }

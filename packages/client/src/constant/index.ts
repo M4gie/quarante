@@ -1,7 +1,6 @@
-import { Platform } from 'react-native';
-
 type EnvVars = {
   serverUrl: string;
+  apiUrl: string;
 };
 
 type Env = {
@@ -11,11 +10,12 @@ type Env = {
 
 const ENV: Env = {
   dev: {
-    serverUrl:
-      Platform.OS === 'web' ? 'http://localhost:4240/' : 'https://socket.quarante.m4gie.com/',
+    serverUrl: 'http://192.168.1.97:4240/',
+    apiUrl: 'http://192.168.1.97:3333/',
   },
   prod: {
     serverUrl: 'https://socket.quarante.m4gie.com/',
+    apiUrl: 'https://api.quarante.m4gie.com/',
   },
 };
 

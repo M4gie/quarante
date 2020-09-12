@@ -26,6 +26,7 @@
     "@adonisjs/core": "^5.0.0-preview-rc",
     "@adonisjs/fold": "^6.0.0",
     "@adonisjs/lucid": "^8.4.1",
+    "nextcloud-link": "^1.2.3",
     "pg": "^8.3.2",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
