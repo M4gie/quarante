@@ -37,7 +37,7 @@ export default function HomeStack() {
       ) : (
         <>
           <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
-          <Stack.Screen name="Upload" component={Upload} />
+          <Stack.Screen name="Upload" options={{ headerTitle: '' }} component={Upload} />
           <Stack.Screen
             name="Room"
             component={Room}

@@ -18,6 +18,7 @@ export default function Upload() {
   const [selectedTheme, setSelectedTheme] = useState(1);
   const [document, setDocument] = useState<DocumentPicker.DocumentResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [description, setDescripion] = useState('');
 
   async function selectSound() {
     const document = await DocumentPicker.getDocumentAsync({
@@ -42,7 +43,7 @@ export default function Upload() {
     if (!document) return;
     setLoading(true);
     try {
-      await uploadFile(document, answers, selectedTheme);
+      await uploadFile(document, answers, selectedTheme, description);
       setAnswers([{ answer: '' }]);
       setDocument(null);
     } catch (e) {
@@ -91,7 +92,7 @@ export default function Upload() {
               backgroundColor: colors.text,
               color: colors.primary,
             }}
-            onValueChange={(itemValue) => setSelectedTheme(itemValue)}>
+            onValueChange={(itemValue) => setSelectedTheme(itemValue as number)}>
             {themes.map((theme) => (
               <Picker.Item
                 key={theme.title}
@@ -108,7 +109,7 @@ export default function Upload() {
           {answers.map((answer, index) => (
             <TextInput
               key={index}
-              style={[styles.input, { backgroundColor: colors.text }]}
+              style={[styles.answers, { backgroundColor: colors.text }]}
               placeholder={`Réponse ${index + 1}`}
               onChange={(data) => updateAnswer(data.nativeEvent.text, index)}
             />
@@ -119,6 +120,18 @@ export default function Upload() {
               Ajouter des réponses
             </Text>
           </Button>
+        </View>
+        <View style={styles.formPart}>
+          <Text fontFamily="medium" fontSize="xl" style={styles.title}>
+            Description:
+          </Text>
+          <TextInput
+            style={[styles.desciption, { backgroundColor: colors.text }]}
+            placeholder={`Nom de la vidéo/Épisode... d'ou vient le son`}
+            onChange={(data) => setDescripion(data.nativeEvent.text)}
+            multiline
+            numberOfLines={4}
+          />
         </View>
         <View style={styles.formPart}>
           {loading ? (
@@ -152,12 +165,21 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
   },
-  input: {
+  answers: {
     borderRadius: 20,
     width: 300,
     ...(Platform.OS === 'web' && { outlineWidth: 0 }),
     textAlign: 'center',
     height: 50,
+    fontFamily: fontFamilies.regular,
+    fontSize: fontSizes.lg,
+    margin: 4,
+  },
+  desciption: {
+    borderRadius: 20,
+    width: 300,
+    ...(Platform.OS === 'web' && { outlineWidth: 0 }),
+    textAlign: 'center',
     fontFamily: fontFamilies.regular,
     fontSize: fontSizes.lg,
     margin: 4,

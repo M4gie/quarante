@@ -25,6 +25,7 @@ export default class RoundValidator {
    */
   public schema = schema.create({
     theme_id: schema.number(),
+    description: schema.string({ trim: true }, [rules.maxLength(200), rules.minLength(10)]),
     file: schema.file({
       size: '1mb',
       extnames: ['mp3'],
@@ -56,7 +57,11 @@ export default class RoundValidator {
     'answers.maxLength': 'La reponse ne doit pas faire plus de 80 caractères.',
     'answers.minLength': 'La réponse doit faire au moins 1 caractère.',
     'theme_id.required': 'Thème manquant',
-    'file.file.extname': 'Le fichier audio doit être au format .mp3',
-    'file.file.size': 'Le fichier audio ne doit pas faire plus de 1mb',
+    'file.extname': 'Le fichier audio doit être au format .mp3',
+    'file.size': 'Le fichier audio ne doit pas faire plus de 1mb',
+    'file.required': 'Un fichier audio est requis',
+    'description.maxLength': 'La description doit faire moins de 200 caractères',
+    'description.minLength': 'La description doit faire plus de 10 caractères',
+    'description.required': 'La description est manquante',
   };
 }

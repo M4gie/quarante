@@ -6,7 +6,8 @@ import getEnv from '../constant';
 export async function uploadFile(
   document: DocumentPicker.DocumentResult,
   answers: { answer: string }[],
-  selectedTheme: number
+  selectedTheme: number,
+  description: string
 ) {
   if (document.type !== 'success') return;
   const bodyFormData = new FormData();
@@ -21,7 +22,9 @@ export async function uploadFile(
     });
   }
   bodyFormData.append('answers', JSON.stringify(answers));
+  // @ts-ignore
   bodyFormData.append('theme_id', selectedTheme);
+  bodyFormData.append('description', description);
   try {
     await fetch(getEnv().apiUrl + 'rounds', {
       method: 'POST',

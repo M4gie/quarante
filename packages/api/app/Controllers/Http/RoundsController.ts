@@ -12,16 +12,15 @@ export default class RoundsController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const { file, theme_id } = await request.validate(RoundValidator);
+    const { file, theme_id, description } = await request.validate(RoundValidator);
     const { answers } = request.only(['answers']);
     let parsedAnswers: { answer: string }[] = JSON.parse(answers);
     parsedAnswers = parsedAnswers.filter((answer) => answer.answer.length > 1);
     parsedAnswers = parsedAnswers.map((answer) => {
       return { answer: answer.answer.toLocaleLowerCase() };
     });
-    console.log(file);
     if (file) {
-      const round = await Round.create({ theme_id, round_type_id: 1 });
+      const round = await Round.create({ theme_id, round_type_id: 1, description });
       const answers = await round.related('answers').createMany(parsedAnswers);
       await file.move(Application.tmpPath('uploads'), {
         name: `${round.id.toString()}.mp3`,
@@ -35,15 +34,16 @@ export default class RoundsController {
     }
   }
 
-  public async update(ctx: HttpContextContract) {
-    const { id } = ctx.params;
-    const data = await ctx.request.validate(RoundValidator);
+  public async update({ request, params }: HttpContextContract) {
+    const { id } = params;
+    const data = await request.validate(RoundValidator);
+    const { answers } = request.only(['answers']);
     const round = await Round.findOrFail(id);
     await round.related('answers').query().delete();
-    const answers = await round.related('answers').createMany(data.answers);
+    const createdAnswers = await round.related('answers').createMany(answers);
     round.merge(data);
     round.save();
-    return { round, answers };
+    return { round, createdAnswers };
   }
 
   public async destroy(ctx: HttpContextContract) {
