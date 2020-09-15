@@ -1,7 +1,7 @@
 import * as DocumentPicker from 'expo-document-picker';
 import { Platform } from 'react-native';
 
-import getEnv from '../constant';
+import request from './request';
 
 export async function uploadFile(
   document: DocumentPicker.DocumentResult,
@@ -26,10 +26,7 @@ export async function uploadFile(
   bodyFormData.append('theme_id', selectedTheme);
   bodyFormData.append('description', description);
   try {
-    await fetch(getEnv().apiUrl + 'rounds', {
-      method: 'POST',
-      body: bodyFormData,
-    });
+    await request('rounds', { method: 'POST', body: bodyFormData });
   } catch (e) {
     throw e;
   }

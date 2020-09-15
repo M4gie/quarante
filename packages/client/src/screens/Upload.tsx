@@ -7,9 +7,9 @@ import { useTheme, ActivityIndicator } from 'react-native-paper';
 import Button from '../components/Button';
 import CenterContainer from '../components/CenterContainer';
 import Text from '../components/Text';
-import getEnv from '../constant';
 import { fontSizes, fontFamilies } from '../constant/theme';
 import { uploadFile } from '../utils/file';
+import request from '../utils/request';
 
 export default function Upload() {
   const { colors } = useTheme();
@@ -19,6 +19,7 @@ export default function Upload() {
   const [document, setDocument] = useState<DocumentPicker.DocumentResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [description, setDescripion] = useState('');
+  const [errors, setErrors] = useState<{ message: string; rule: string }[]>([]);
 
   async function selectSound() {
     const document = await DocumentPicker.getDocumentAsync({
@@ -41,27 +42,32 @@ export default function Upload() {
 
   async function sendSound() {
     if (!document) return;
+    setErrors([]);
     setLoading(true);
     try {
       await uploadFile(document, answers, selectedTheme, description);
       setAnswers([{ answer: '' }]);
       setDocument(null);
+      setErrors([
+        {
+          rule: 'Success',
+          message: 'Ajout effectué avec succès, votre son va être étudié par un membre du staff !',
+        },
+      ]);
     } catch (e) {
-      console.log(e);
+      if (e.lenght > 0) setErrors(e);
+      else setErrors([{ rule: 'API error', message: "Impossible de contacter l'API" }]);
     }
     setLoading(false);
   }
 
   useEffect(() => {
-    fetch(getEnv().apiUrl + 'themes')
-      .then((res) => res.json())
-      .then((res) => {
-        setThemes(res);
-        setSelectedTheme(res[0].id);
+    request('themes')
+      .then((response: { title: string; id: number }[]) => {
+        setThemes(response);
+        setSelectedTheme(response[0].id);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -133,6 +139,13 @@ export default function Upload() {
             numberOfLines={4}
           />
         </View>
+        <View style={styles.errors}>
+          {errors.map((error) => (
+            <Text fontFamily="medium" fontSize="sm" key={error.rule}>
+              {error.message}
+            </Text>
+          ))}
+        </View>
         <View style={styles.formPart}>
           {loading ? (
             <ActivityIndicator focusable color={colors.text} />
@@ -148,6 +161,9 @@ export default function Upload() {
 }
 
 const styles = StyleSheet.create({
+  errors: {
+    alignItems: 'center',
+  },
   formPart: {
     alignItems: 'center',
     padding: 10,
