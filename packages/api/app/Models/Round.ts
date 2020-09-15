@@ -22,6 +22,9 @@ export default class Round extends BaseModel {
   @column()
   public theme_id: number;
 
+  @column()
+  public validated: boolean;
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime;
 
