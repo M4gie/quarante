@@ -8,6 +8,7 @@ import pseudoState from '../global/pseudoState';
 import Home from '../screens/Home';
 import Room from '../screens/Room';
 import SignIn from '../screens/SignIn';
+import Upload from '../screens/Upload';
 import { HomeStackParamList } from '../typings/navigation';
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -36,6 +37,7 @@ export default function HomeStack() {
       ) : (
         <>
           <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
+          <Stack.Screen name="Upload" options={{ headerTitle: '' }} component={Upload} />
           <Stack.Screen
             name="Room"
             component={Room}

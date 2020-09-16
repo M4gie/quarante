@@ -223,3 +223,10 @@ export const profiler: ProfilerConfig = {
   */
   whitelist: [],
 };
+
+export const cloud = {
+  url: Env.get('CLOUD_URL') as string,
+  user: Env.get('CLOUD_USER') as string,
+  password: Env.get('CLOUD_PASSWORD') as string,
+  path: Env.get('CLOUD_PATH') as string,
+};
