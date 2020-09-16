@@ -89,7 +89,10 @@ async function uploadFile(file) {
       const cloudFilePath = `${cloudConfig.path}sounds/${file.fileName}`;
       await client.put(cloudFilePath, readFileSync(file.filePath));
       const ret = await client.shares.add(cloudFilePath, 3 /* PUBLIC LINK */);
-      return ret.url + '/download';
+      if (ret.url) {
+        const url = ret.url.replace(/^http:\/\//i, 'https://');
+        return url + '/download';
+      }
     } catch (e) {
       // USE LOGGER
     }
