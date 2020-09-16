@@ -8,7 +8,7 @@ import NextcloudClient from 'nextcloud-link';
 
 export default class RoundsController {
   public async index() {
-    return Round.query().preload('answers');
+    return Round.query().where('validated', true).preload('answers');
   }
 
   public async store({ request }: HttpContextContract) {
@@ -20,7 +20,12 @@ export default class RoundsController {
       return { answer: answer.answer.toLocaleLowerCase() };
     });
     if (file) {
-      const round = await Round.create({ theme_id, round_type_id: 1, description });
+      const round = await Round.create({
+        theme_id,
+        round_type_id: 1,
+        description,
+        validated: false,
+      });
       const answers = await round.related('answers').createMany(parsedAnswers);
       await file.move(Application.tmpPath('uploads'), {
         name: `${round.id.toString()}.mp3`,
@@ -57,7 +62,10 @@ export default class RoundsController {
     const { themes = [] }: { themes: number[] } = request.only(['themes']);
 
     if (!themes) return [];
-    const rounds = await Round.query().whereIn('theme_id', themes).preload('answers');
+    const rounds = await Round.query()
+      .where('validated', true)
+      .whereIn('theme_id', themes)
+      .preload('answers');
     const selectRounds: Round[] = [];
     for (let i = 0; i < 100 && rounds.length > 0; i++) {
       const rand = Math.floor(Math.random() * rounds.length);
