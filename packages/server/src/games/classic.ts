@@ -80,21 +80,14 @@ export default class Classic extends Room {
   };
 
   gameLoop = () => {
+    this.setStatus(RoomStatus.Starting);
     this.roundTimer = global.setInterval(() => {
+      this.setStatus(RoomStatus.InProgress);
       const topPlayer = this.getTopPlayer();
-      if (topPlayer && topPlayer.score >= 40) {
-        this.emit(GameEvent.Winner, topPlayer.name);
-        if (this.roundTimer) {
-          clearInterval(this.roundTimer);
-        }
+      if (topPlayer && topPlayer.score >= 3) {
+        this.handleWin(topPlayer);
       } else {
-        this.isGuessTime = true;
-        this.emitQuestion();
-        this.answerTimer = global.setTimeout(() => {
-          this.isGuessTime = false;
-          this.setPlayersCanGuess(true);
-          this.emitAnswer();
-        }, 15 * 1000);
+        this.handleRound();
       }
     }, 20 * 1000);
   };
@@ -117,6 +110,29 @@ export default class Classic extends Room {
     return null;
   };
 
+  handleRound = () => {
+    this.isGuessTime = true;
+    this.emitQuestion();
+    this.answerTimer = global.setTimeout(() => {
+      this.isGuessTime = false;
+      this.setPlayersCanGuess(true);
+      this.emitAnswer();
+    }, 15 * 1000);
+  };
+
+  handleWin = (topPlayer: Player) => {
+    this.setStatus(RoomStatus.Ended);
+    this.emit(GameEvent.Winner, topPlayer.name);
+    if (this.roundTimer) {
+      clearInterval(this.roundTimer);
+    }
+    global.setTimeout(() => {
+      this.resetPlayers();
+      this.setStatus(RoomStatus.Waiting);
+      this.event.emit(GameEvent.Start);
+    }, 10 * 1000);
+  };
+
   initGame = () => {
     this.fetchRounds();
     this.event.on(GameEvent.Start, () => this.gameLoop());
@@ -132,10 +148,14 @@ export default class Classic extends Room {
     }
   };
 
+  resetPlayers = () => {
+    this.players.map((player) => (player.score = 0));
+    this.emitScoreBoard();
+  };
+
   startGame = (socket: Socket) => {
     this.emitStatusToSocket(socket.id);
     if (this.status === RoomStatus.Waiting && this.players.length >= 1) {
-      this.setStatus(RoomStatus.Starting);
       this.event.emit(GameEvent.Start);
     }
     socket.on(GameEvent.Guess, (guess) => this.playerGuess(socket.id, guess));

@@ -18,6 +18,7 @@ export default class RoomPool {
 
   constructor({ themes, server }: Props) {
     this.server = server;
+    // Init RoomPool with one room of each themes
     for (let i = 0; i < themes.length; i++) {
       this.addRoom(themes[i]);
     }
