@@ -3,7 +3,7 @@
     "name": "client",
     "slug": "client",
     "platforms": ["ios", "android", "web"],
-    "version": "0.4.0",
+    "version": "0.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

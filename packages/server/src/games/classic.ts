@@ -84,7 +84,7 @@ export default class Classic extends Room {
     this.roundTimer = global.setInterval(() => {
       this.setStatus(RoomStatus.InProgress);
       const topPlayer = this.getTopPlayer();
-      if (topPlayer && topPlayer.score >= 3) {
+      if (topPlayer && topPlayer.score >= 10) {
         this.handleWin(topPlayer);
       } else {
         this.handleRound();
