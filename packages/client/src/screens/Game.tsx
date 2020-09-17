@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import GameAnswer from '../components/GameAnswer';
 import GameInput from '../components/GameInput';
+import GameMainScreen from '../components/GameMainScreen/GameMainScreen';
 import { ScoreBoard } from '../components/ScoreBoard';
 import { useScreenWidth } from '../utils/hooks/screenWidth';
 
@@ -18,13 +18,13 @@ export default function Game() {
         { backgroundColor: colors.primary },
         isLargeScreen && { flexDirection: 'row' },
       ]}>
-      {!isLargeScreen && <GameAnswer />}
+      {!isLargeScreen && <GameMainScreen />}
       <ScoreBoard />
       {isLargeScreen ? (
         <>
           <View style={styles.gameContainer}>
             <View style={styles.info}>
-              <GameAnswer />
+              <GameMainScreen />
             </View>
             <GameInput />
           </View>
