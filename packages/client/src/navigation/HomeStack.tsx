@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { Image } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useRecoilValue } from 'recoil';
 
@@ -13,6 +14,15 @@ import { HomeStackParamList } from '../typings/navigation';
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 80, height: 80 }}
+      source={require('./../../assets/icon-remove-bg.png')}
+    />
+  );
+}
+
 export default function HomeStack() {
   const pseudo = useRecoilValue(pseudoState);
   const { colors } = useTheme();
@@ -21,6 +31,7 @@ export default function HomeStack() {
     <Stack.Navigator
       headerMode="screen"
       screenOptions={{
+        title: 'Quarante',
         headerTitleAlign: 'center',
         headerTintColor: colors.text,
         headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.text },
@@ -30,20 +41,28 @@ export default function HomeStack() {
         <Stack.Screen
           name="SignIn"
           component={SignIn}
-          options={{
-            title: 'Quarante',
-          }}
+          options={{ headerTitle: () => <LogoTitle /> }}
         />
       ) : (
         <>
-          <Stack.Screen name="Home" options={{ headerTitle: 'Quarante' }} component={Home} />
-          <Stack.Screen name="Upload" options={{ headerTitle: '' }} component={Upload} />
+          <Stack.Screen
+            name="Home"
+            options={{ headerTitle: () => <LogoTitle /> }}
+            component={Home}
+          />
+          <Stack.Screen
+            name="Upload"
+            options={{ headerTitle: () => <LogoTitle /> }}
+            component={Upload}
+          />
           <Stack.Screen
             name="Room"
             component={Room}
             options={{
+              headerRight: () => <LogoTitle />,
               headerStyle: { backgroundColor: colors.accent, borderBottomColor: colors.accent },
               headerBackTitleVisible: false,
+              headerTitleAlign: 'left',
             }}
           />
         </>

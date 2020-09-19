@@ -1,7 +1,14 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "Quarante",
+    "description": "A modern blind test",
+    "slug": "Quarante",
+    "owner": "M4gie",
+    "privacy": "public",
+    "githubUrl": "https://github.com/M4gie/quarante",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#24243E",
+    "primaryColor": "#24243E",
     "platforms": ["ios", "android", "web"],
     "version": "0.6.0",
     "orientation": "portrait",
@@ -9,14 +16,40 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#24243E"
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#00000000",
+      "translucent": true
+    },
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#24243E"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 15000
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/icon-remove-bg.png",
+      "name": "Quarante - Blind test",
+      "shortName": "Quarante",
+      "lang": "fr-FR",
+      "themeColor": "#24243E",
+      "description": "Ba genre c'est un site de blind test",
+      "backgroundColor": "#24243E",
+      "preferRelatedApplications": true,
+      "splash": {
+        "backgroundColor": "#24243E",
+        "image": "./assets/splash.png",
+        "resizeMode": "contain"
+      }
     }
   }
 }

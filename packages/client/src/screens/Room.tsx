@@ -12,7 +12,7 @@ import { HomeNavigatorProps } from '../typings/navigation';
 import Game from './Game';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  navigation.setOptions({ headerTitle: '' });
+  navigation.setOptions({ headerTitle: 'Youtube' }); // Will set it dynamicaly later :D
   const [socket, setSocket] = useRecoilState(socketState);
   const pseudo = useRecoilValue(pseudoState);
 
