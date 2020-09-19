@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import io from 'socket.io-client';
 
 import Sound from '../components/Sound';
@@ -13,11 +13,12 @@ import Game from './Game';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
   navigation.setOptions({ headerTitle: 'Youtube' }); // Will set it dynamicaly later :D
-  const [socket, setSocket] = useRecoilState(socketState);
+  const setSocket = useSetRecoilState(socketState);
   const pseudo = useRecoilValue(pseudoState);
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log('Join the game');
       if (!pseudo) return;
       const tmpSocket = io(getEnv().serverUrl + route.params.id, {
         query: {
@@ -25,7 +26,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
         },
       });
       setSocket(tmpSocket);
-      return () => socket?.close();
+      return () => tmpSocket.close();
     }, [pseudo])
   );
 
