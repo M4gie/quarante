@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { Platform, AsyncStorage } from 'react-native';
@@ -69,8 +69,22 @@ function AppWithProviders() {
     );
   }
 
+  const linking: LinkingOptions = {
+    prefixes: [],
+    enabled: true,
+    config: {
+      initialRouteName: 'Home',
+      screens: {
+        SignIn: 'sign-in',
+        Home: '',
+        Upload: 'add-sound',
+        Room: 'room/:id',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer linking={{ enabled: true, prefixes: [] }}>
+    <NavigationContainer linking={linking}>
       <HomeStack />
     </NavigationContainer>
   );
