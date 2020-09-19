@@ -28,7 +28,7 @@ const avatars = [
 ];
 
 export default function ScoreBoardContent() {
-  const players: { name: string; score: number; avatar: number }[] = useSocketListener(
+  const players: { name: string; score: number; avatar: number; id: string }[] = useSocketListener(
     'players',
     []
   );
@@ -37,7 +37,7 @@ export default function ScoreBoardContent() {
   return (
     <ScrollView style={Platform.OS === 'web' && { height: '80vh' }}>
       {players.map((player) => (
-        <View key={player.name} style={[styles.card, { backgroundColor: colors.primary }]}>
+        <View key={player.id} style={[styles.card, { backgroundColor: colors.primary }]}>
           <Image
             style={styles.avatar}
             source={{
