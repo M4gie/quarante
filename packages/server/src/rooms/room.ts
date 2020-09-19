@@ -84,8 +84,8 @@ export default class Room {
   };
 
   getPlayers = (): { name: string; score: number; avatar: number }[] => {
-    return this.players.map(({ name, score, avatar }) => {
-      return { name, score, avatar };
+    return this.players.map(({ name, score, avatar, id }) => {
+      return { name, score, avatar, id };
     });
   };
 
