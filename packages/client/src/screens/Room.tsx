@@ -18,15 +18,14 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log('Join the game');
       if (!pseudo) return;
-      const tmpSocket = io(getEnv().serverUrl + route.params.id, {
+      const socket = io(getEnv().serverUrl + route.params.id, {
         query: {
           pseudo,
         },
       });
-      setSocket(tmpSocket);
-      return () => tmpSocket.close();
+      setSocket(socket);
+      return () => socket.close();
     }, [pseudo])
   );
 
