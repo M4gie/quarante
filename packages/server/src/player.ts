@@ -13,6 +13,7 @@ export default class Player {
   score: number = 0;
   canGuess: boolean = true;
   avatar: number = 0;
+  find: boolean = false;
 
   constructor(props: Props) {
     this.id = props.id;
