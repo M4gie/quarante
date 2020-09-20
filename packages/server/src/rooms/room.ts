@@ -47,14 +47,7 @@ export default class Room {
     this.emitScoreBoard();
   };
 
-  addPlayerPoint = (id: string, point: number) => {
-    const player = this.getPlayer(id);
-    if (player) {
-      player.score += point;
-      this.updatePlayer(player, id);
-      this.emitScoreBoard();
-    }
-  };
+  addPlayerPoint = (player: Player, point: number) => {};
 
   emit = (event: string, data: any) => {
     this.nameSpace.emit(event, data);
@@ -84,8 +77,8 @@ export default class Room {
   };
 
   getPlayers = (): { name: string; score: number; avatar: number }[] => {
-    return this.players.map(({ name, score, avatar, id }) => {
-      return { name, score, avatar, id };
+    return this.players.map(({ name, score, avatar, id, find }) => {
+      return { name, score, avatar, id, find };
     });
   };
 

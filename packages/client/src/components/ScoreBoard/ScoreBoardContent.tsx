@@ -28,10 +28,13 @@ const avatars = [
 ];
 
 export default function ScoreBoardContent() {
-  const players: { name: string; score: number; avatar: number; id: string }[] = useSocketListener(
-    'players',
-    []
-  );
+  const players: {
+    name: string;
+    score: number;
+    avatar: number;
+    id: string;
+    find: boolean;
+  }[] = useSocketListener('players', []);
   const { colors } = useTheme();
 
   return (
@@ -46,10 +49,15 @@ export default function ScoreBoardContent() {
               }.png`,
             }}
           />
-          <Text fontSize="lg" style={styles.pseudo}>
+          <Text
+            fontSize="lg"
+            style={[styles.pseudo, { color: player.find ? 'gold' : colors.text }]}>
             {player.name}
           </Text>
-          <Text fontSize="lg" fontFamily="medium" style={styles.score}>
+          <Text
+            fontSize="lg"
+            fontFamily="medium"
+            style={[styles.score, { color: player.find ? 'gold' : colors.text }]}>
             {player.score}
           </Text>
         </View>

@@ -43,20 +43,11 @@ export default class Classic extends Room {
     this.maxPlayers = gameSetup.maxPlayers;
   }
 
-  setPlayerCanGuess = (id: string, canGuess: boolean): void => {
-    const player: Player | undefined = this.getPlayer(id);
-    if (player) {
-      player.canGuess = canGuess;
-      this.updatePlayer(player, id);
-    }
-  };
-
-  setPlayersCanGuess = (canGuess: boolean): void => {
-    this.players.forEach((player) => {
-      if (player.canGuess === !canGuess) {
-        this.setPlayerCanGuess(player.id, canGuess);
-      }
-    });
+  addPlayerPoint = (player: Player, point: number) => {
+    player.score += point;
+    player.find = true;
+    this.emitToSocket('find', { status: 'gg' }, player.id);
+    this.emitScoreBoard();
   };
 
   emitAnswer = () => {
@@ -113,6 +104,8 @@ export default class Classic extends Room {
   handleRound = () => {
     this.isGuessTime = true;
     this.emitQuestion();
+    this.setPlayersFind(false);
+    this.emitScoreBoard();
     this.answerTimer = global.setTimeout(() => {
       this.isGuessTime = false;
       this.setPlayersCanGuess(true);
@@ -143,14 +136,29 @@ export default class Classic extends Room {
     if (!guess || !player || this.answers.length < 1) return;
     const result = stringSimilarity.findBestMatch(guess.toLowerCase(), this.answers);
     if (player.canGuess === true && result.bestMatch.rating >= 0.8 && this.isGuessTime === true) {
-      this.setPlayerCanGuess(id, false);
-      this.addPlayerPoint(id, 1);
+      this.addPlayerPoint(player, 1);
     }
   };
 
   resetPlayers = () => {
     this.players.map((player) => (player.score = 0));
     this.emitScoreBoard();
+  };
+
+  setPlayersCanGuess = (canGuess: boolean): void => {
+    this.players.forEach((player) => {
+      if (player.canGuess === !canGuess) {
+        player.canGuess = canGuess;
+      }
+    });
+  };
+
+  setPlayersFind = (find: boolean): void => {
+    this.players.forEach((player) => {
+      if (player.find === !find) {
+        player.find = find;
+      }
+    });
   };
 
   startGame = (socket: Socket) => {
