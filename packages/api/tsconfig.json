@@ -12,6 +12,6 @@
       "App/*": ["./packages/api/app/*"],
       "Contracts/*": ["./packages/api/contracts/*"]
     },
-    "types": ["@adonisjs/core", "@adonisjs/lucid"]
+    "types": ["@adonisjs/core", "@adonisjs/lucid", "@adonisjs/auth"]
   }
 }
