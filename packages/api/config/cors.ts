@@ -6,6 +6,7 @@
  */
 
 import { CorsConfig } from '@ioc:Adonis/Core/Cors';
+import Env from '@ioc:Adonis/Core/Env';
 
 const corsConfig: CorsConfig = {
   /*
@@ -43,7 +44,10 @@ const corsConfig: CorsConfig = {
   |                     one of the above values.
   |
   */
-  origin: '*',
+  origin: [
+    Env.get('APP_URL', 'https://quarante.m4gie.com') as string,
+    Env.get('SERVER_URL', 'https://server.quarante.m4gie.com') as string,
+  ],
 
   /*
   |--------------------------------------------------------------------------
