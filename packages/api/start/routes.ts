@@ -20,10 +20,16 @@
 
 import Route from '@ioc:Adonis/Core/Route';
 
-Route.resource('themes', 'ThemesController').only(['index', 'store', 'update', 'destroy']);
+Route.resource('themes', 'ThemesController')
+  .apiOnly()
+  .middleware({ store: 'auth', update: 'auth', destroy: 'auth' });
 
-Route.resource('roundTypes', 'RoundTypesController').only(['index', 'store', 'update', 'destroy']);
+Route.resource('roundTypes', 'RoundTypesController')
+  .apiOnly()
+  .middleware({ store: 'auth', update: 'auth', destroy: 'auth' });
 
-Route.resource('rounds', 'RoundsController').only(['index', 'store', 'update', 'destroy']);
+Route.resource('rounds', 'RoundsController')
+  .apiOnly()
+  .middleware({ update: 'auth', destroy: 'auth' });
 
 Route.post('rounds/random', 'RoundsController.random');
