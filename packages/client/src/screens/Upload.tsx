@@ -55,8 +55,11 @@ export default function Upload() {
         },
       ]);
     } catch (e) {
-      if (e.lenght > 0) setErrors(e);
-      else setErrors([{ rule: 'API error', message: "Impossible de contacter l'API" }]);
+      if (e.length > 0) {
+        setErrors(e);
+      } else {
+        setErrors([{ rule: 'API error', message: "Impossible de contacter l'API" }]);
+      }
     }
     setLoading(false);
   }
