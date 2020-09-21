@@ -42,7 +42,9 @@ jobs:
           expo-cache: true
       - run: expo build:web
       - name: netlify deploy
-        run: npx netlify-cli deploy --prod --dir web-build --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+        mv _headers web-build
+        npx netlify-cli deploy --prod --dir web-build --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }}
   publish-api:
     name: publish api
     runs-on: ubuntu-latest
