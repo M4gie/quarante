@@ -2,7 +2,7 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 ![ts](https://badgen.net/badge/-/TypeScript/blue?icon=typescript&label)
-![release](https://badgen.net/github/release/M4gie/quarante)
+![release](https://badgen.net/github/tag/M4gie/quarante)
 
 # Introduction
 
