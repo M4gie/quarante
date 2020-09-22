@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node ace build",
-    "start": "node ace serve --watch",
+    "dev": "node ace serve --watch",
     "type-check": "tsc --incremental false --composite false --noEmit",
     "lint": "eslint --ext '.js,.ts,.tsx' . --max-warnings=0"
   },
