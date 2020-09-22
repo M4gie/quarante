@@ -23,7 +23,7 @@ export default function Home({ navigation }: Props) {
   }, []);
 
   return (
-    <CenterContainer>
+    <CenterContainer footerEnable>
       {rooms.map((room) => (
         <Button key={room.id} onPress={() => navigation.navigate('Room', { id: room.id })}>
           {room.theme.title}

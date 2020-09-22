@@ -27,7 +27,7 @@ export default function SignIn() {
   }
 
   return (
-    <CenterContainer style={styles.container}>
+    <CenterContainer style={styles.container} footerEnable>
       <TextInput
         style={[
           styles.input,

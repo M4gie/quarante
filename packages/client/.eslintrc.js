@@ -4,5 +4,6 @@ module.exports = {
     __DEV__: true,
     fetch: true,
     FormData: true,
+    window: true,
   },
 };
