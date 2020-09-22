@@ -39,6 +39,13 @@ export default function Footer({ enable }: CenterContainerProps) {
           color={colors.text}
           onPress={() => openLink('https://discord.gg/xgcbjXU')}
         />
+        <FontAwesome5
+          style={styles.icon}
+          name="github"
+          size={40}
+          color={colors.text}
+          onPress={() => openLink('https://github.com/M4gie/quarante')}
+        />
       </View>
     </View>
   );
