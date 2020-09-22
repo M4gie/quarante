@@ -10,8 +10,8 @@ type Env = {
 
 const ENV: Env = {
   dev: {
-    serverUrl: 'http://192.168.1.97:4240/',
-    apiUrl: 'http://192.168.1.97:3333/',
+    serverUrl: 'http://127.0.0.1:4240/',
+    apiUrl: 'http://127.0.0.1:3333/',
   },
   prod: {
     serverUrl: 'https://socket.quarante.m4gie.com/',
