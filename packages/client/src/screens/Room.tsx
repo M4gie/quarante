@@ -1,5 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import io from 'socket.io-client';
 
@@ -12,9 +12,12 @@ import { HomeNavigatorProps } from '../typings/navigation';
 import Game from './Game';
 
 export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) {
-  navigation.setOptions({ headerTitle: 'Youtube' }); // Will set it dynamicaly later :D
   const setSocket = useSetRecoilState(socketState);
   const pseudo = useRecoilValue(pseudoState);
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: 'Youtube' }); // Will set it dynamicaly later :D
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {

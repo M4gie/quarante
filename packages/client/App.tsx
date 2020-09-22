@@ -1,7 +1,8 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Platform, AsyncStorage } from 'react-native';
+import { Platform } from 'react-native';
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
 
