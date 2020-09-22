@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, AsyncStorage, Platform } from 'react-native';
+import { TextInput, StyleSheet, Platform } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useSetRecoilState } from 'recoil';
 

@@ -31,8 +31,8 @@ export default function GameInput() {
   }
 
   async function checkKey(e: NativeSyntheticEvent<TextInputKeyPressEventData>) {
-    e.preventDefault();
     if (e.nativeEvent.key === 'Enter') {
+      e.preventDefault();
       emitAnswer();
     }
   }
