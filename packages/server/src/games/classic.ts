@@ -46,6 +46,7 @@ export default class Classic extends Room {
   addPlayerPoint = (player: Player, point: number) => {
     player.score += point;
     player.find = true;
+    player.canGuess = false;
     this.emitToSocket('find', { status: 'gg' }, player.id);
     this.emitScoreBoard();
   };
