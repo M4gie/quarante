@@ -3,7 +3,6 @@
     "name": "Quarante",
     "description": "A modern blind test",
     "slug": "Quarante",
-    "owner": "M4gie",
     "privacy": "public",
     "githubUrl": "https://github.com/M4gie/quarante",
     "userInterfaceStyle": "dark",
