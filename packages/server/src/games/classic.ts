@@ -32,15 +32,13 @@ export default class Classic extends Room {
   answers: string[] = [];
   answerTimer: NodeJS.Timeout | null = null;
   isGuessTime: boolean = false;
-  maxPlayers: number;
   currentRound: Round | null = null;
   rounds: Round[] = [];
   roundTimer: NodeJS.Timeout | null = null;
   time: NodeJS.Timer | null = null;
 
-  constructor({ theme, nameSpace, roomNumber, ...gameSetup }: Props & RoomProps) {
-    super({ theme, nameSpace, roomNumber });
-    this.maxPlayers = gameSetup.maxPlayers;
+  constructor({ theme, nameSpace, roomNumber, maxPlayers }: Props & RoomProps) {
+    super({ theme, nameSpace, roomNumber, maxPlayers });
   }
 
   addPlayerPoint = (player: Player, point: number) => {

@@ -26,6 +26,7 @@ export default function Room({ route, navigation }: HomeNavigatorProps<'Room'>) 
         query: {
           pseudo,
         },
+        reconnectionAttempts: 3,
       });
       setSocket(socket);
       return () => socket.close();
