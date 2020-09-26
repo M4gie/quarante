@@ -23,6 +23,11 @@ async function server(ioServer: Server) {
   let clients = 0;
 
   ioServer.on('connection', function (socket: Socket) {
+    if (clients >= 20) {
+      socket.emit('full', '💥 Pas de chance nos serveurs sont pleins ! 💥');
+      socket.disconnect(true);
+      return;
+    }
     /* Easy way to count client, .clients doesn't send the "real" value */
     clients++;
     ioServer.emit('connected', clients);

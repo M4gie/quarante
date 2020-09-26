@@ -12,6 +12,7 @@ export type RoomProps = {
   theme: Theme;
   nameSpace: Namespace;
   roomNumber: string;
+  maxPlayers: number;
 };
 
 export enum RoomStatus {
@@ -31,14 +32,16 @@ enum RoomEvent {
 export default class Room {
   event: EventEmitter = new EventEmitter();
   id: string;
+  maxPlayers: number;
   nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
   status: RoomStatus = RoomStatus.Waiting;
   theme: Theme;
 
-  constructor({ theme, nameSpace, roomNumber }: RoomProps) {
+  constructor({ theme, nameSpace, roomNumber, maxPlayers }: RoomProps) {
     this.theme = theme;
     this.nameSpace = nameSpace;
+    this.maxPlayers = maxPlayers;
     this.id = roomNumber;
   }
 
