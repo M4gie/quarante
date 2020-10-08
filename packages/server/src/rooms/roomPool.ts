@@ -59,8 +59,8 @@ export default class RoomPool {
   };
 
   getRooms = () => {
-    const roomNames = this.rooms.map(({ theme, type, icon, id }) => {
-      return { theme, type, icon, id };
+    const roomNames = this.rooms.map(({ theme, type, icon, id, players }) => {
+      return { theme, type, icon, id, players: players.length };
     });
     return roomNames;
   };

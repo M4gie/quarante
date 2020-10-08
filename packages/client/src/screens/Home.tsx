@@ -1,8 +1,10 @@
+import GameType from 'quarante-api/build/app/Models/GameType';
 import Theme from 'quarante-api/build/app/Models/Theme';
 import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import io from 'socket.io-client';
 
-import Button from '../components/Button';
+import Card from '../components/Card';
 import CenterContainer from '../components/CenterContainer';
 import Text from '../components/Text';
 import getEnv from '../constant/index';
@@ -13,7 +15,9 @@ type Props = {
 };
 
 export default function Home({ navigation }: Props) {
-  const [rooms, setRooms] = useState<{ theme: Theme; id: string }[]>([]);
+  const [rooms, setRooms] = useState<
+    { theme: Theme; id: string; icon: string; players: number; type: GameType }[]
+  >([]);
   const [error, setError] = useState<string | null>(null);
   let socket = null;
 
@@ -23,24 +27,44 @@ export default function Home({ navigation }: Props) {
       navigation.navigate('Home');
       setError(error);
     });
-    socket.on('rooms', (data: { theme: Theme; id: string }[]) => {
-      setRooms(data);
-    });
+    socket.on(
+      'rooms',
+      (data: { theme: Theme; id: string; icon: string; players: number; type: GameType }[]) => {
+        setRooms(data);
+      }
+    );
   }, []);
+
+  function navigate(id: string) {
+    navigation.navigate('Room', { id });
+  }
 
   return (
     <CenterContainer footerEnable>
       <Text fontFamily="medium" fontSize="lg">
         {error}
       </Text>
-      {rooms.map((room) => (
-        <Button key={room.id} onPress={() => navigation.navigate('Room', { id: room.id })}>
-          {room.theme.title}
-        </Button>
-      ))}
+      <View style={styles.cardsContainter}>
+        {rooms.map((room) => (
+          <Card
+            key={room.id}
+            onPress={() => navigate(room.id)}
+            icon={room.icon}
+            players={room.players}
+            title={room.theme.title}
+            subTitle={room.type.title}
+          />
+        ))}
+      </View>
       {/* Add new question is temporaly disable https://github.com/M4gie/quarante/issues/70
        <Button onPress={() => navigation.navigate('Upload')}>Proposer un son</Button> 
        */}
     </CenterContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  cardsContainter: {
+    flexDirection: 'row',
+  },
+});
