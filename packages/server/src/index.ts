@@ -1,8 +1,8 @@
 import 'dotenv/config';
-import Theme from 'quarante-api/build/app/Models/Theme';
+import Game from 'quarante-api/build/app/Models/Game';
 import io, { Socket, Server } from 'socket.io';
 
-import { getThemes } from './requests';
+import { getGames } from './requests';
 import RoomPool from './rooms/roomPool';
 
 const ioServer = io.listen(4240);
@@ -11,14 +11,14 @@ if (process.env.ALLOWED_ORIGIN) {
 }
 
 async function server(ioServer: Server) {
-  let themes: Theme[] = [];
+  let games: Game[] = [];
   try {
-    themes = await getThemes();
+    games = await getGames();
   } catch (e) {
     console.log('API request error (getThemes): ', e);
   }
 
-  const Rooms = new RoomPool({ themes, server: ioServer });
+  const Rooms = new RoomPool({ games, server: ioServer });
 
   let clients = 0;
 

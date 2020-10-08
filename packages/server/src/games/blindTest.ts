@@ -1,5 +1,5 @@
 /**
- * Classic game object
+ * BlindTest game object
  */
 
 import Answer from 'quarante-api/app/Models/Answer';
@@ -9,13 +9,9 @@ import stringSimilarity from 'string-similarity';
 
 import Player from '../player';
 import { getRandomRounds } from '../requests';
-import Room, { RoomProps, RoomStatus } from '../rooms/room';
+import Room, { RoomStatus } from '../rooms/room';
 
-export enum GameType {
-  Classic,
-}
-
-enum GameEvent {
+const enum GameEvent {
   Answer = 'answer',
   Guess = 'guess',
   Question = 'question',
@@ -24,11 +20,7 @@ enum GameEvent {
   Winner = 'winner',
 }
 
-type Props = {
-  maxPlayers: number;
-};
-
-export default class Classic extends Room {
+export default class BlindTest extends Room {
   answers: string[] = [];
   answerTimer: NodeJS.Timeout | null = null;
   isGuessTime: boolean = false;
@@ -36,10 +28,6 @@ export default class Classic extends Room {
   rounds: Round[] = [];
   roundTimer: NodeJS.Timeout | null = null;
   time: NodeJS.Timer | null = null;
-
-  constructor({ theme, nameSpace, roomNumber, maxPlayers }: Props & RoomProps) {
-    super({ theme, nameSpace, roomNumber, maxPlayers });
-  }
 
   addPlayerPoint = (player: Player, point: number) => {
     player.score += point;
