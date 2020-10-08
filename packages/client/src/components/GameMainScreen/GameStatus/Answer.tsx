@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
-import Text from '../Text';
+import Text from '../../Text';
 
 type Answer = {
   answers: string[];

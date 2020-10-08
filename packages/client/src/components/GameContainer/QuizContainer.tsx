@@ -2,12 +2,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import GameInput from '../components/GameInput';
-import GameMainScreen from '../components/GameMainScreen/GameMainScreen';
-import { ScoreBoard } from '../components/ScoreBoard';
-import { useScreenWidth } from '../utils/hooks/screenWidth';
+import { useScreenWidth } from '../../utils/hooks/screenWidth';
+import GameInput from '../GameInput';
+import { QuizMainScreen } from '../GameMainScreen/';
+import RoundCounter from '../GameMainScreen/GameStatus/RoundCounter';
+import { ScoreBoard } from '../ScoreBoard';
 
-export default function Game() {
+export default function QuizContainer() {
   const { colors } = useTheme();
   const isLargeScreen = useScreenWidth();
 
@@ -18,13 +19,14 @@ export default function Game() {
         { backgroundColor: colors.primary },
         isLargeScreen && { flexDirection: 'row' },
       ]}>
-      {!isLargeScreen && <GameMainScreen />}
+      {!isLargeScreen && <QuizMainScreen />}
       <ScoreBoard />
       {isLargeScreen ? (
         <>
           <View style={styles.gameContainer}>
+            <RoundCounter />
             <View style={styles.info}>
-              <GameMainScreen />
+              <QuizMainScreen />
             </View>
             <GameInput />
           </View>

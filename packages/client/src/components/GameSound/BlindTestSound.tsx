@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import isQuestionTimeState from '../global/isQuestionTimeState';
-import timerState from '../global/timerState';
-import { useSocketListener } from '../utils/hooks/socketListener';
-import QSounds from '../utils/sounds';
+import isQuestionTimeState from '../../global/isQuestionTimeState';
+import timerState from '../../global/timerState';
+import { useSocketListener } from '../../utils/hooks/socketListener';
+import QSounds from '../../utils/sounds';
 
-export default function Sound() {
+export default function BlindTestSound() {
   const question = useSocketListener('question', null);
   const find = useSocketListener('find', null);
   const setIsQuestionTime = useSetRecoilState(isQuestionTimeState);
@@ -15,7 +15,7 @@ export default function Sound() {
 
   async function playFindSound() {
     if (!sounds.current.isLoaded('find')) {
-      await sounds.current.add('find', require('../../assets/sounds/pop.mp3'));
+      await sounds.current.add('find', require('../../../assets/sounds/pop.mp3'));
     }
     sounds.current.play('find');
   }
