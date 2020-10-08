@@ -9,7 +9,8 @@ import pseudoState from '../global/pseudoState';
 import Home from '../screens/Home';
 import Room from '../screens/Room';
 import SignIn from '../screens/SignIn';
-import Upload from '../screens/Upload';
+/* Add new question is temporaly disable https://github.com/M4gie/quarante/issues/70
+import Upload from '../screens/Upload'; */
 import { HomeStackParamList } from '../typings/navigation';
 
 const Stack = createStackNavigator<HomeStackParamList>();
@@ -50,11 +51,12 @@ export default function HomeStack() {
             options={{ headerTitle: () => <LogoTitle /> }}
             component={Home}
           />
+          {/* Add new question is temporaly disable https://github.com/M4gie/quarante/issues/70
           <Stack.Screen
             name="Upload"
             options={{ headerTitle: () => <LogoTitle /> }}
             component={Upload}
-          />
+          /> */}
           <Stack.Screen
             name="Room"
             component={Room}
