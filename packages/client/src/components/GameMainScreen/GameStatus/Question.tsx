@@ -1,14 +1,20 @@
 import React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 
-import Text from '../Text';
+import Text from '../../Text';
 
-export default function Info() {
+type Question = {
+  question: string;
+};
+
+export default function Question({ question }: Question) {
   const fontSize = Platform.OS === 'web' ? 'xl' : 'md';
 
+  if (!question) return null;
+
   return (
-    <Text fontSize={fontSize} fontFamily="regular" style={styles.text}>
-      La partie va bientôt commencer !
+    <Text fontSize={fontSize} fontFamily="medium" style={styles.text}>
+      {question}
     </Text>
   );
 }

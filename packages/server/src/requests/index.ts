@@ -1,11 +1,11 @@
+import Game from 'quarante-api/build/app/Models/Game';
 import Round from 'quarante-api/build/app/Models/Round';
-import Theme from 'quarante-api/build/app/Models/Theme';
 
 import request from './axiosWrap';
 
-export async function getThemes(): Promise<Theme[]> {
+export async function getGames(): Promise<Game[]> {
   return request({
-    url: `/themes`,
+    url: `/games`,
     method: 'GET',
   });
 }

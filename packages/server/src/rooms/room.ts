@@ -3,46 +3,51 @@
  */
 
 import { EventEmitter } from 'events';
-import Theme from 'quarante-api/build/app/Models/Theme';
+import GameType from 'quarante-api/app/Models/GameType';
+import Theme from 'quarante-api/app/Models/Theme';
 import { Namespace, Socket } from 'socket.io';
 
 import Player from '../player';
 
 export type RoomProps = {
-  theme: Theme;
+  icon: string;
   nameSpace: Namespace;
   roomNumber: string;
-  maxPlayers: number;
+  theme: Theme;
+  type: GameType;
 };
 
-export enum RoomStatus {
+export const enum RoomStatus {
   Waiting,
   Starting,
   InProgress,
   Ended,
 }
 
-enum RoomEvent {
+const enum RoomEvent {
   Connection = 'connection',
   Disconnect = 'disconnect',
   Players = 'players',
   Status = 'status',
+  Infos = 'infos',
 }
 
 export default class Room {
   event: EventEmitter = new EventEmitter();
+  icon: string;
   id: string;
-  maxPlayers: number;
   nameSpace: Namespace; // Socket.io room namespace
   players: Player[] = [];
   status: RoomStatus = RoomStatus.Waiting;
   theme: Theme;
+  type: GameType;
 
-  constructor({ theme, nameSpace, roomNumber, maxPlayers }: RoomProps) {
+  constructor({ theme, type, nameSpace, roomNumber, icon }: RoomProps) {
     this.theme = theme;
     this.nameSpace = nameSpace;
-    this.maxPlayers = maxPlayers;
     this.id = roomNumber;
+    this.type = type;
+    this.icon = icon;
   }
 
   addPlayer = (socket: Socket) => {
@@ -89,6 +94,7 @@ export default class Room {
 
   roomLoop = (): void => {
     this.nameSpace.on(RoomEvent.Connection, (socket: Socket) => {
+      this.sendRoomInfos(socket);
       this.addPlayer(socket);
       this.startGame(socket);
       socket.on(RoomEvent.Disconnect, () => {
@@ -104,6 +110,14 @@ export default class Room {
   removePlayer = (socket: Socket) => {
     this.players = this.players.filter(({ id }) => id !== socket.id);
     this.emitScoreBoard();
+  };
+
+  sendRoomInfos = (socket: Socket) => {
+    this.emitToSocket(
+      RoomEvent.Infos,
+      { theme: this.theme.title, type: this.type.title },
+      socket.id,
+    );
   };
 
   setStatus = (status: RoomStatus) => {

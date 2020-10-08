@@ -32,4 +32,12 @@ Route.resource('rounds', 'RoundsController')
   .apiOnly()
   .middleware({ update: 'auth', destroy: 'auth' });
 
+Route.resource('games', 'GamesController')
+  .apiOnly()
+  .middleware({ store: 'auth', update: 'auth', destroy: 'auth' });
+
+Route.resource('gameTypes', 'GameTypesController')
+  .apiOnly()
+  .middleware({ store: 'auth', update: 'auth', destroy: 'auth' });
+
 Route.post('rounds/random', 'RoundsController.random');
