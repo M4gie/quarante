@@ -38,7 +38,9 @@ export default function Home({ navigation }: Props) {
           {room.theme.title}
         </Button>
       ))}
-      <Button onPress={() => navigation.navigate('Upload')}>Proposer un son</Button>
+      {/* Add new question is temporaly disable https://github.com/M4gie/quarante/issues/70
+       <Button onPress={() => navigation.navigate('Upload')}>Proposer un son</Button> 
+       */}
     </CenterContainer>
   );
 }

@@ -30,7 +30,7 @@ Route.resource('roundTypes', 'RoundTypesController')
 
 Route.resource('rounds', 'RoundsController')
   .apiOnly()
-  .middleware({ update: 'auth', destroy: 'auth' });
+  .middleware({ store: 'auth', update: 'auth', destroy: 'auth' });
 
 Route.resource('games', 'GamesController')
   .apiOnly()
