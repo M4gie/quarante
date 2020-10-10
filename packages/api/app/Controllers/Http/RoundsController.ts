@@ -1,10 +1,9 @@
-import Application from '@ioc:Adonis/Core/Application';
-import Config from '@ioc:Adonis/Core/Config';
+/* import Config from '@ioc:Adonis/Core/Config'; */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Round from 'App/Models/Round';
 import RoundValidator from 'App/Validators/RoundValidator';
-import { readFileSync } from 'fs';
-import NextcloudClient from 'nextcloud-link';
+/* import { readFileSync } from 'fs';
+import NextcloudClient from 'nextcloud-link'; */
 
 export default class RoundsController {
   public async index() {
@@ -12,13 +11,20 @@ export default class RoundsController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const { file, theme_id, description } = await request.validate(RoundValidator);
-    const { answers } = request.only(['answers']);
-    let parsedAnswers: { answer: string }[] = JSON.parse(answers);
+    const { answers, round_type_id, data, difficulty, theme_id, description } = request.only([
+      'answers',
+      'round_type_id',
+      'data',
+      'difficulty',
+      'theme_id',
+      'description',
+    ]);
+    let parsedAnswers: { answer: string }[] = answers; /* JSON.parse(answers); */
     parsedAnswers = parsedAnswers.filter((answer) => answer.answer.length > 1);
     parsedAnswers = parsedAnswers.map((answer) => {
       return { answer: answer.answer.toLocaleLowerCase() };
     });
+    /* Temporaly edit the form to import quiz
     if (file) {
       const round = await Round.create({
         theme_id,
@@ -36,7 +42,17 @@ export default class RoundsController {
         await round.save();
       }
       return { round, answers };
-    }
+    } */
+    const round = await Round.create({
+      theme_id,
+      round_type_id,
+      description,
+      data,
+      difficulty,
+      validated: true,
+    });
+    const createdAnswers = await round.related('answers').createMany(parsedAnswers);
+    return { round, createdAnswers };
   }
 
   public async update({ request, params }: HttpContextContract) {
@@ -76,7 +92,7 @@ export default class RoundsController {
   }
 }
 
-async function uploadFile(file) {
+/* async function uploadFile(file) {
   const cloudConfig = Config.get('app.cloud');
   const client = new NextcloudClient({
     url: cloudConfig.url,
@@ -88,14 +104,14 @@ async function uploadFile(file) {
     try {
       const cloudFilePath = `${cloudConfig.path}sounds/${file.fileName}`;
       await client.put(cloudFilePath, readFileSync(file.filePath));
-      const ret = await client.shares.add(cloudFilePath, 3 /* PUBLIC LINK */);
+      const ret = await client.shares.add(cloudFilePath, 3); // 3 => public link
       if (ret.url) {
         const url = ret.url.replace(/^http:\/\//i, 'https://');
         return url + '/download';
       }
     } catch (e) {
-      // USE LOGGER
+      // Use logger
     }
   }
   return null;
-}
+} */

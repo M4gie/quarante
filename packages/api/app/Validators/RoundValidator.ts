@@ -26,10 +26,10 @@ export default class RoundValidator {
   public schema = schema.create({
     theme_id: schema.number(),
     description: schema.string({ trim: true }, [rules.maxLength(200), rules.minLength(10)]),
-    file: schema.file({
+    /* file: schema.file({
       size: '1mb',
       extnames: ['mp3'],
-    }),
+    }), */
   });
 
   /**
