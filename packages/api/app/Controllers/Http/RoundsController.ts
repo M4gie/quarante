@@ -12,13 +12,20 @@ export default class RoundsController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const { file, theme_id, description } = await request.validate(RoundValidator);
-    const { answers } = request.only(['answers']);
-    let parsedAnswers: { answer: string }[] = JSON.parse(answers);
+    const { answers, round_type_id, data, difficulty, theme_id, description } = request.only([
+      'answers',
+      'round_type_id',
+      'data',
+      'difficulty',
+      'theme_id',
+      'description',
+    ]);
+    let parsedAnswers: { answer: string }[] = answers; /* JSON.parse(answers); */
     parsedAnswers = parsedAnswers.filter((answer) => answer.answer.length > 1);
     parsedAnswers = parsedAnswers.map((answer) => {
       return { answer: answer.answer.toLocaleLowerCase() };
     });
+    /* Temporaly edit the form to import quiz
     if (file) {
       const round = await Round.create({
         theme_id,
@@ -36,7 +43,17 @@ export default class RoundsController {
         await round.save();
       }
       return { round, answers };
-    }
+    } */
+    const round = await Round.create({
+      theme_id,
+      round_type_id,
+      description,
+      data,
+      difficulty,
+      validated: true,
+    });
+    const createdAnswers = await round.related('answers').createMany(parsedAnswers);
+    return { round, createdAnswers };
   }
 
   public async update({ request, params }: HttpContextContract) {
