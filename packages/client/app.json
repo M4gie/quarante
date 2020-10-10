@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Quarante",
-    "description": "A modern blind test",
+    "description": "Quiz/Blind test français !",
     "slug": "Quarante",
     "privacy": "public",
     "githubUrl": "https://github.com/M4gie/quarante",
@@ -37,11 +37,11 @@
     },
     "web": {
       "favicon": "./assets/icon-remove-bg.png",
-      "name": "Quarante - Blind test",
+      "name": "Quarante",
       "shortName": "Quarante",
       "lang": "fr-FR",
       "themeColor": "#24243E",
-      "description": "Ba genre c'est un site de blind test",
+      "description": "Quizz et blind test",
       "backgroundColor": "#24243E",
       "preferRelatedApplications": true,
       "splash": {
