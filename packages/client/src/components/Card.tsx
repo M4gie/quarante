@@ -24,7 +24,7 @@ export default function Card({ style, ...props }: ButtonProps) {
         {props.title.toUpperCase()}
       </Text>
       <Text style={[{ color: colors.primary }, styles.subTitle]} fontFamily="regular" fontSize="md">
-        {titleCase(props.title)}
+        {titleCase(props.subTitle)}
       </Text>
       <Text style={[{ color: colors.primary }]} fontFamily="regular" fontSize="md">
         {props.players} joueurs

@@ -97,11 +97,11 @@ export default class Quiz extends Room {
   handleRound = () => {
     this.isGuessTime = true;
     this.emitQuestion();
-    this.emitRoundCounter();
     this.setPlayersFind(false);
     this.emitScoreBoard();
     this.answerTimer = global.setTimeout(() => {
       this.roundsCounter++;
+      this.emitRoundCounter();
       this.isGuessTime = false;
       this.setPlayersCanGuess(true);
       this.emitAnswer();
@@ -147,6 +147,7 @@ export default class Quiz extends Room {
 
   resetRoom = () => {
     this.roundsCounter = 0;
+    this.emitRoundCounter();
   };
 
   setPlayersCanGuess = (canGuess: boolean): void => {

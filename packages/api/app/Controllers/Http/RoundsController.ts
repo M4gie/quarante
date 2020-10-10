@@ -49,7 +49,7 @@ export default class RoundsController {
       description,
       data,
       difficulty,
-      validated: true,
+      validated: false,
     });
     const createdAnswers = await round.related('answers').createMany(parsedAnswers);
     return { round, createdAnswers };
