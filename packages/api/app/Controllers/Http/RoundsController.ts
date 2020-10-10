@@ -1,10 +1,9 @@
-import Application from '@ioc:Adonis/Core/Application';
-import Config from '@ioc:Adonis/Core/Config';
+/* import Config from '@ioc:Adonis/Core/Config'; */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Round from 'App/Models/Round';
 import RoundValidator from 'App/Validators/RoundValidator';
-import { readFileSync } from 'fs';
-import NextcloudClient from 'nextcloud-link';
+/* import { readFileSync } from 'fs';
+import NextcloudClient from 'nextcloud-link'; */
 
 export default class RoundsController {
   public async index() {
@@ -93,7 +92,7 @@ export default class RoundsController {
   }
 }
 
-async function uploadFile(file) {
+/* async function uploadFile(file) {
   const cloudConfig = Config.get('app.cloud');
   const client = new NextcloudClient({
     url: cloudConfig.url,
@@ -105,14 +104,14 @@ async function uploadFile(file) {
     try {
       const cloudFilePath = `${cloudConfig.path}sounds/${file.fileName}`;
       await client.put(cloudFilePath, readFileSync(file.filePath));
-      const ret = await client.shares.add(cloudFilePath, 3 /* PUBLIC LINK */);
+      const ret = await client.shares.add(cloudFilePath, 3); // 3 => public link
       if (ret.url) {
         const url = ret.url.replace(/^http:\/\//i, 'https://');
         return url + '/download';
       }
     } catch (e) {
-      // USE LOGGER
+      // Use logger
     }
   }
   return null;
-}
+} */
