@@ -8,7 +8,7 @@ RUN yarn install --pure-lockfile --non-interactive
 WORKDIR /app/packages/api
 RUN node ace build --production
 WORKDIR /app/packages/api/build
-RUN yarn install --production
+RUN yarn install
 
 FROM node:12.16.3-alpine
 WORKDIR /app
